@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import { doesUsernameExist } from '../services/firebase';
+import { doesUsernameExist, doesEmailExist } from '../services/firebase';
 
 const SignUp = () => {
   const history = useHistory();
@@ -12,15 +12,37 @@ const SignUp = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const [error, setError] = useState('');
 
-  const isInvalid = password === '' || email === '';
+  const isInvalid = password === '' || email === '' || passwordConfirm === '';
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
+    if (password.length < 6) {
+      setPassword('');
+      setPasswordConfirm('');
+      return setError('Password must be at least 6 characters');
+    }
+
+    if (password !== passwordConfirm) {
+      setPassword('');
+      setPasswordConfirm('');
+      return setError('Passwords do not match');
+    }
+
     const usernameExists = await doesUsernameExist(username);
+    const emailExists = await doesEmailExist(email);
+
+    // verify if email is already in database
+    if (emailExists) {
+      setEmail('');
+      return setError('Email already exists');
+    }
+
+    // verify if username is already in database
     if (!usernameExists.length) {
       try {
         const createdUserResult = await firebase
@@ -34,24 +56,27 @@ const SignUp = () => {
         });
 
         // firebase user collection (create a document)
-        await firebase
-          .firestore()
-          .collection('users')
-          .add({
-            userId: createdUserResult.user.uid,
-            username: username.toLowerCase(),
-            fullName,
-            email: email.toLowerCase(),
-            following: ['2'],
-            followers: [],
-            dateCreated: Date.now(),
-          });
+        await firebase.firestore().collection('users').add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          email: email.toLowerCase().trim(),
+          avatar: '/images/avatars/defaultAvatar.png',
+          following: [],
+          followers: [],
+          dateCreated: Date.now(),
+        });
+        setFullName('');
+        setEmail('');
+        setPassword('');
+        setPasswordConfirm('');
 
         history.push(ROUTES.DASHBOARD);
       } catch (err) {
         setFullName('');
         setEmail('');
         setPassword('');
+        setPasswordConfirm('');
         setError(err.message);
       }
     } else {
@@ -116,6 +141,14 @@ const SignUp = () => {
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
               onChange={({ target }) => setPassword(target.value)}
               value={password}
+            />
+            <input
+              aria-label="Confirm your password"
+              type="password"
+              placeholder="Confirm Password"
+              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              onChange={({ target }) => setPasswordConfirm(target.value)}
+              value={passwordConfirm}
             />
             <button
               disabled={isInvalid}
