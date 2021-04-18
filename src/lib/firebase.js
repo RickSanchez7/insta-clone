@@ -3,13 +3,13 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-  apiKey: 'AIzaSyBToPJFOefu1K7VIapzj2lGhGUtTCOoL_w',
-  authDomain: 'insta-clone-ad2f5.firebaseapp.com',
-  projectId: 'insta-clone-ad2f5',
-  storageBucket: 'insta-clone-ad2f5.appspot.com',
-  messagingSenderId: '448096449469',
-  appId: '1:448096449469:web:4994db12ec390ed9d018d4',
-  measurementId: 'G-0MHZ5QDKV9',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_DATABASE_URL,
+  storageBucket: process.env.REACT_APP_PROJECT_ID,
+  messagingSenderId: process.env.REACT_APP_STORAGE_BUCKET,
+  appId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const firebase = Firebase.initializeApp(config);

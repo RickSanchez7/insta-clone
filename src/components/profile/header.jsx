@@ -20,6 +20,7 @@ const Header = ({
     followers,
     following,
     username: profileUsername,
+    avatar,
   },
 }) => {
   const { user: loggedInUser } = useContext(UserContext);
@@ -113,29 +114,31 @@ const Header = ({
           <img
             className="rounded-full md:h-40 md:w-40 h-28 w-28 flex"
             alt={`${profileUsername}'s profile picture`}
-            src={user?.avatar}
+            src={avatar}
           />
         )}
-        <div className="flex md:flex-row md:items-center flex-col mt-2">
-          <label className="flex items-center justify-center md:w-10 md:h-10 h-6 w-6 border border-red-primary text-red-primary rounded-full md:text-3xl text-xl hover:text-white hover:bg-red-primary cursor-pointer mx-auto">
-            <input
-              className="opacity-0 h-0 w-0"
-              type="file"
-              name="file"
-              onChange={handleFileInputChange}
-            />
-            <span className="md:mb-2 mb-1">+</span>
-          </label>
-          {previewPhoto && (
-            <button
-              type="button"
-              onClick={handleUpload}
-              className="md:text-sm text-xs md:mt-0 mt-2 ml-0 md:ml-2 hover:text-red-primary self-center"
-            >
-              {loading ? 'loading...' : 'Change'}
-            </button>
-          )}
-        </div>
+        {profileUserId === user?.userId && (
+          <div className="flex md:flex-row md:items-center flex-col mt-2">
+            <label className="flex items-center justify-center md:w-10 md:h-10 h-6 w-6 border border-red-primary text-red-primary rounded-full md:text-3xl text-xl hover:text-white hover:bg-red-primary cursor-pointer mx-auto">
+              <input
+                className="opacity-0 h-0 w-0"
+                type="file"
+                name="file"
+                onChange={handleFileInputChange}
+              />
+              <span className="md:mb-2 mb-1">+</span>
+            </label>
+            {previewPhoto && (
+              <button
+                type="button"
+                onClick={handleUpload}
+                className="md:text-sm text-xs md:mt-0 mt-2 ml-0 md:ml-2 hover:text-red-primary self-center"
+              >
+                {loading ? 'loading...' : 'Change'}
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-center flex-col">
         <div className="container flex items-center">
