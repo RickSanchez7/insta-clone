@@ -64,6 +64,7 @@ const SignUp = () => {
           avatar: '/images/avatars/defaultAvatar.png',
           following: [],
           followers: [],
+          role: 'user',
           dateCreated: Date.now(),
         });
         setFullName('');
