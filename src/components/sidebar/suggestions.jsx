@@ -41,9 +41,7 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
         ))}
       </div>
     </div>
-  ) : (
-    <p>No suggestions</p>
-  );
+  ) : null;
 };
 
 export default Suggestions;

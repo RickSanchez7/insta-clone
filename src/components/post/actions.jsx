@@ -96,7 +96,7 @@ const Actions = ({
           <button
             type="button"
             onClick={deletePost}
-            className="ml-auto font-bold hover:text-red-primary transition-colors duration-200 italic"
+            className="font-bold hover:text-red-primary transition-colors duration-200 italic"
           >
             delete
           </button>
