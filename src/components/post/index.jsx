@@ -13,7 +13,7 @@ const Post = ({ content }) => {
   // components
   // -> header, image, actions (like & comment icons), footer, comments
   return (
-    <div className="rounded col-span-4 border bg-white border-gray-primary md:mb-12 mb-6 md:ml-0 ml-3">
+    <div className="rounded col-span-4 border bg-white border-gray-primary md:mb-12 mb-6 md:mx-1 mx-6">
       <Header username={content.username} avatar={content.avatar} />
       <Image src={content.imageSrc} caption={content.caption} />
       <Actions
@@ -23,7 +23,7 @@ const Post = ({ content }) => {
         handleFocus={handleFocus}
         postUserId={content.userId}
       />
-      <Footer caption={content.caption} username={content.username} />
+      <Footer caption={content.caption} />
       <Comments
         docId={content.docId}
         comments={content.comments}

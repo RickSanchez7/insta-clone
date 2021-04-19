@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
 import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
-// import { DEFAULT_IMAGE_PATH } from '../constants/paths';
 import useUser from '../hooks/use-user';
 
 const Header = () => {
@@ -27,7 +26,7 @@ const Header = () => {
               </Link>
             </h1>
           </div>
-          <div className="text-gray-700 text-center flex items-center align-items">
+          <div className="text-gray-700 flex items-center align-items">
             {loggedInUser ? (
               <>
                 <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
@@ -80,7 +79,7 @@ const Header = () => {
                   <div className="flex items-center cursor-pointer  mr-1">
                     <Link to={`/p/${user?.username}`}>
                       <img
-                        className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex"
+                        className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex border border-red-primary"
                         src={user.avatar}
                         alt={`${user?.username} profile`}
                       />

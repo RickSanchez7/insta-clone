@@ -9,7 +9,7 @@ const Sidebar = () => {
   } = useContext(LoggedInUserContext);
 
   return (
-    <div className="md:p-4 p-1">
+    <div className="md:p-4 p-0">
       <User username={username} fullName={fullName} avatar={avatar} />
       <Suggestions
         userId={userId}

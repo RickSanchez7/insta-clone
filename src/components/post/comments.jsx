@@ -8,7 +8,7 @@ import LoggedInUserContext from '../../context/logged-in-user';
 
 const Comments = ({ docId, posted, commentInput }) => {
   const {
-    user: { username },
+    user: { username, role },
   } = useContext(LoggedInUserContext);
 
   const [commentsSlice, setCommentsSlice] = useState(2);
@@ -54,10 +54,10 @@ const Comments = ({ docId, posted, commentInput }) => {
 
   return (
     <>
-      <div className="p-4 pt-1 pb-4">
+      <div className="md:px-4 px-2 md:py-4 py-2 pt-1 md:pb-4 pb-2">
         {comments?.slice(0, commentsSlice).map((item) => (
           <div key={item.id} className="mb-1 flex items-center">
-            <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-sm">
+            <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-xs">
               <Link to={`/p/${item.comments.displayName}`}>
                 <span className="mr-1 font-bold">
                   {item.comments.displayName}
@@ -65,7 +65,7 @@ const Comments = ({ docId, posted, commentInput }) => {
               </Link>
               <span>{item.comments.text}</span>
             </div>
-            {item.comments.displayName === username && (
+            {(item.comments.displayName === username || role === 'admin') && (
               <svg
                 className="h-5 w-5 ml-auto cursor-pointer hover:text-red-primary fill-current"
                 fill="none"
@@ -97,7 +97,7 @@ const Comments = ({ docId, posted, commentInput }) => {
             View more comments
           </button>
         )}
-        <p className="text-gray-base uppercase text-xs mt-2">
+        <p className="text-gray-base uppercase text-xs md:mt-2 mt-1">
           {formatDistance(posted, new Date())} ago
         </p>
       </div>

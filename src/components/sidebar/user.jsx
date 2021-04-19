@@ -10,18 +10,18 @@ const User = ({ username, fullName, avatar }) => {
   ) : (
     <Link
       to={`/p/${username}`}
-      className="flex md:mb-6 mb-4 items-center justify-evenly"
+      className="md:flex hidden md:mb-6 mb-4 items-center justify-evenly"
     >
       <div className="flex items-center justify-evenly">
         <img
-          className="rounded-full md:w-16 md:h-16 w-9 h-9 flex md:mr-3 mr-1"
+          className="rounded-full md:w-16 md:h-16 w-9 h-9 flex md:mr-3 mr-1 border border-red-primary"
           src={`${avatar}`}
           alt={`${username}`}
         />
       </div>
       <div>
-        <p className="font-bold md:text-sm text-xs">{username}</p>
-        <p className="md:text-sm text-xs">{fullName}</p>
+        <p className="font-bold md:text-base text-xs">{username}</p>
+        <p className="md:text-base text-xs">{fullName}</p>
       </div>
     </Link>
   );

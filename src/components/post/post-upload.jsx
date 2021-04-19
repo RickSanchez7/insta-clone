@@ -56,8 +56,7 @@ const PostUpload = () => {
   };
 
   return (
-    <div className="rounded col-span-4 border bg-white border-gray-primary md:mb-12 mb-6 md:ml-0 ml-3">
-      {/* <div className="md:h-52 h-40 my-2"> */}
+    <div className="rounded col-span-4 border bg-white border-gray-primary md:mb-12 mb-5 md:mx-1 mx-6">
       {previewSource && (
         <img
           src={previewSource}
@@ -65,7 +64,6 @@ const PostUpload = () => {
           className="md:h-52 h-40 mx-auto mt-2"
         />
       )}
-      {/* </div> */}
       <label className="flex items-center justify-center md:w-10 md:h-10 h-7 w-7 border border-red-primary text-red-primary rounded-full md:text-3xl text-xl hover:text-white hover:bg-red-primary cursor-pointer mx-auto mt-2">
         <input
           className="opacity-0 h-0 w-0"

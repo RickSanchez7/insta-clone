@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { FirebaseContext } from '../../context/firebase';
 import UserContext from '../../context/user';
+import LoggedInUserContext from '../../context/logged-in-user';
 
 const Actions = ({
   docId,
@@ -12,6 +13,9 @@ const Actions = ({
   const {
     user: { uid: userId },
   } = useContext(UserContext);
+  const {
+    user: { role },
+  } = useContext(LoggedInUserContext);
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useContext(FirebaseContext);
@@ -38,7 +42,7 @@ const Actions = ({
 
   return (
     <>
-      <div className="flex justify-between md:p-4 px-4 py-2">
+      <div className="flex justify-between md:px-4 px-2 md:py-4 py-2">
         <div className="flex">
           <svg
             onClick={handleToggleLiked}
@@ -53,7 +57,9 @@ const Actions = ({
             stroke="currentColor"
             tabIndex={0}
             className={`md:w-8 w-6 mr-4 select-none cursor-pointer focus:outline-none ${
-              toggleLiked ? 'fill-red text-red-primary' : 'text-black-light'
+              toggleLiked
+                ? 'fill-red hover:fill-lightRed text-red-primary hover:text-red-secundary transition-colors duration-200'
+                : 'text-black-light hover:text-red-primary transition-colors duration-200'
             }`}
           >
             <path
@@ -70,7 +76,7 @@ const Actions = ({
                 handleFocus();
               }
             }}
-            className="md:w-8 w-6 text-black-light select-none cursor-pointer focus:outline-none"
+            className="md:w-8 w-6 text-black-light hover:text-red-primary transition-colors duration-200 select-none cursor-pointer focus:outline-none"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -86,17 +92,17 @@ const Actions = ({
             &gt;
           </svg>
         </div>
-        {postUserId === userId && (
+        {(postUserId === userId || role === 'admin') && (
           <button
             type="button"
             onClick={deletePost}
-            className="ml-auto font-bold hover:text-red-primary italic"
+            className="ml-auto font-bold hover:text-red-primary transition-colors duration-200 italic"
           >
             delete
           </button>
         )}
       </div>
-      <div className="p-4 py-0">
+      <div className="md:px-4 px-2">
         <p className="font-bold">
           {likes === 1 ? `${likes} like` : `${likes} likes`}
         </p>

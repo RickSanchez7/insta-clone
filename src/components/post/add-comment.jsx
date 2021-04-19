@@ -29,7 +29,7 @@ const AddComment = ({ docId, commentInput }) => {
   return (
     <div className="border-t border-gray-primary">
       <form
-        className="flex justify-between pl-0 pr-5"
+        className="flex justify-between pl-0 md:pr-5 pr-3"
         method="POST"
         onSubmit={(event) =>
           comment.length >= 1
@@ -40,7 +40,7 @@ const AddComment = ({ docId, commentInput }) => {
         <input
           aria-label="Add a comment"
           autoComplete="off"
-          className="md:text-sm text-xs text-gray-base w-full mr-3 md:py-5 py-3 px-4"
+          className="md:text-sm text-xs text-gray-base w-full mr-3 md:py-5 py-3 md:px-4 px-2"
           type="text"
           name="add-comment"
           placeholder="Add a comment..."

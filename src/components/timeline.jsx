@@ -13,16 +13,18 @@ import { getUserByUserId } from '../services/firebase';
 
 const Timeline = () => {
   const { user } = useContext(LoggedInUserContext);
-  // const { photos } = usePhotos(user);
 
   const [userPhotos, setUserPhotos] = useState([]);
   const [detailedPhotos, setDetailedPhotos] = useState([]);
+  const [pages, setPages] = useState(10);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const photo = firebase
       .firestore()
       .collection('photos')
       .orderBy('dateCreated', 'desc')
+      .limit(pages)
       .onSnapshot((snapshot) => {
         setUserPhotos(
           snapshot.docs.map((doc) => ({
@@ -33,14 +35,15 @@ const Timeline = () => {
       });
 
     return () => photo();
-  }, [user?.docId]);
+  }, [user?.docId, pages]);
 
   useEffect(() => {
+    setLoading(true);
     const func = async () => {
       const photosWithUserDetails = await Promise.all(
         userPhotos.map(async (photo) => {
           let userLikedPhoto = false;
-          if (photo.likes.includes(user)) {
+          if (photo.likes.includes(user?.userId)) {
             userLikedPhoto = true;
           }
           // photo.userId = 2
@@ -51,13 +54,18 @@ const Timeline = () => {
         })
       );
       setDetailedPhotos(photosWithUserDetails);
+      setLoading(false);
     };
 
     func();
   }, [userPhotos]);
 
+  const morePages = () => {
+    setPages((prev) => prev + 5);
+  };
+
   return (
-    <div className="container col-span-2">
+    <div className="container flex flex-col md:col-span-2 col-span-3">
       <PostUpload />
       {!detailedPhotos ? (
         <Skeleton count={4} width={640} height={500} className="mb-5" />
@@ -68,6 +76,13 @@ const Timeline = () => {
           </motion.div>
         ))
       )}
+      <button
+        type="button"
+        className="bg-blue-medium hover:bg-blue-light transition-colors duaration-200 text-white font-bold py-2 px-4 rounded-full mb-12 self-center"
+        onClick={morePages}
+      >
+        {loading ? 'Loading' : 'More'}
+      </button>
     </div>
   );
 };

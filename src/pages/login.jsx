@@ -12,7 +12,7 @@ const login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const isInvalid = password === '' || email === '';
+  const isInvalid = password < 6 || email === '';
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,14 +32,14 @@ const login = () => {
   }, []);
 
   return (
-    <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-      <div className="flex w-3/5">
+    <div className="container flex mx-auto max-w-screen-md items-center justify-center h-screen">
+      <div className="md:flex hidden w-3/5">
         <img
           src="/images/iphone-with-profile.jpg"
           alt="iPhone with Instagram app"
         />
       </div>
-      <div className="flex flex-col w-2/5">
+      <div className="flex flex-col md:w-2/5 w-4/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
             <img
