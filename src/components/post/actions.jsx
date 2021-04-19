@@ -42,8 +42,8 @@ const Actions = ({
 
   return (
     <>
-      <div className="flex justify-between md:px-4 px-2 md:py-4 py-2">
-        <div className="flex">
+      <div className="flex justify-between md:px-4 px-2 md:py-4 py-2 my-0 md:m-h-14 m-h-10">
+        <div className="flex ">
           <svg
             onClick={handleToggleLiked}
             onKeyDown={(event) => {
@@ -56,7 +56,7 @@ const Actions = ({
             viewBox="0 0 24 24"
             stroke="currentColor"
             tabIndex={0}
-            className={`md:w-8 w-6 mr-4 select-none cursor-pointer focus:outline-none ${
+            className={`md:w-8 w-6 md:h-8 h-6 mr-4 select-none cursor-pointer focus:outline-none ${
               toggleLiked
                 ? 'fill-red hover:fill-lightRed text-red-primary hover:text-red-secundary transition-colors duration-200'
                 : 'text-black-light hover:text-red-primary transition-colors duration-200'
@@ -76,7 +76,7 @@ const Actions = ({
                 handleFocus();
               }
             }}
-            className="md:w-8 w-6 text-black-light hover:text-red-primary transition-colors duration-200 select-none cursor-pointer focus:outline-none"
+            className="md:w-8 w-6 md:h-8 h-6 text-black-light hover:text-red-primary transition-colors duration-200 select-none cursor-pointer focus:outline-none"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

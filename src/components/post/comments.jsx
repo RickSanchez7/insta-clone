@@ -54,7 +54,7 @@ const Comments = ({ docId, posted, commentInput }) => {
 
   return (
     <>
-      <div className="md:px-4 px-2 md:py-4 py-2 pt-1 md:pb-4 pb-2">
+      <div className="md:px-4 px-2 md:py-4 py-2">
         {comments?.slice(0, commentsSlice).map((item) => (
           <div key={item.id} className="mb-1 flex items-center">
             <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-xs">
