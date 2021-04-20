@@ -11,7 +11,6 @@ const Header = ({ username, avatar, docId, postUserId }) => {
   const image = avatar !== undefined ? avatar : DEFAULT_IMAGE_PATH;
 
   const [button, setButton] = useState('hidden opacity-0');
-  console.log(button);
 
   const { firebase } = useContext(FirebaseContext);
   const {
