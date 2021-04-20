@@ -10,7 +10,8 @@ import UserContext from '../../context/user';
 const Header = ({ username, avatar, docId, postUserId }) => {
   const image = avatar !== undefined ? avatar : DEFAULT_IMAGE_PATH;
 
-  const [button, setButton] = useState('hidden opacity-0 h-0');
+  const [button, setButton] = useState('hidden opacity-0');
+  console.log(button);
 
   const { firebase } = useContext(FirebaseContext);
   const {
@@ -68,7 +69,8 @@ const Header = ({ username, avatar, docId, postUserId }) => {
           <button
             type="button"
             onClick={showButton}
-            className="md:m-h-14 m-h-10 focus:outline-none"
+            ref={wrapperRef}
+            className="md:m-h-12 m-h-8 focus:outline-none"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -88,10 +90,9 @@ const Header = ({ username, avatar, docId, postUserId }) => {
           <button
             type="button"
             onClick={deletePost}
-            ref={wrapperRef}
-            className={`${button} absolute font-bold italic bg-white border border-gray-primary transition-all duration-200 rounded py-1 px-5 mt-10 right-4 z-10 md:m-h-8 m-h-7`}
+            className={`${button} absolute font-bold italic bg-white border border-gray-primary transition-all duration-200 rounded py-1 md:px-5 px-3 md:mt-10 mt-8 right-4 z-10`}
           >
-            <p className="hover:text-red-primary transition-colors duration-200 ease-in-out">
+            <p className="hover:text-red-primary transition-colors duration-200 ease-in-out md:text-base text-sm">
               delete
             </p>
           </button>
