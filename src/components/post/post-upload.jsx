@@ -28,13 +28,10 @@ const PostUpload = () => {
     data.append('file', selectedFile[0]);
     data.append('upload_preset', 'ricardo');
     setLoading(true);
-    const res = await fetch(
-      'https://api.cloudinary.com/v1_1/drqvkgn34/image/upload',
-      {
-        method: 'POST',
-        body: data,
-      }
-    );
+    const res = await fetch(process.env.REACT_APP_CLOUDINARY_URL, {
+      method: 'POST',
+      body: data,
+    });
     const file = await res.json();
 
     postUpload(file.secure_url, caption, user?.userId);

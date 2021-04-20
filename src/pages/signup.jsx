@@ -21,7 +21,7 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (password.length < 6) {
+    if (password.trim().length < 6) {
       setPassword('');
       setPasswordConfirm('');
       return setError('Password must be at least 6 characters');
@@ -58,7 +58,7 @@ const SignUp = () => {
         // firebase user collection (create a document)
         await firebase.firestore().collection('users').add({
           userId: createdUserResult.user.uid,
-          username: username.toLowerCase(),
+          username: username.toLowerCase().trim(),
           fullName,
           email: email.toLowerCase().trim(),
           avatar: '/images/avatars/defaultAvatar.png',

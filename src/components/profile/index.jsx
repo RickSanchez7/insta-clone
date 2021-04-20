@@ -19,6 +19,7 @@ const Profile = ({ user }) => {
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
       const photos = await getUserPhotosByUserId(user.userId);
+
       dispatch({
         profile: user,
         photosCollection: photos,
@@ -36,7 +37,17 @@ const Profile = ({ user }) => {
         followerCount={followerCount}
         setFollowerCount={dispatch}
       />
-      <Photos photos={photosCollection} />
+      <div className="h-16 border-t border-gray-primary mt-12 pt-4">
+        <div className="grid grid-cols-3 md:gap-6 gap-4 mx-2  mt-4 mb-12">
+          {photosCollection.map((photo) => (
+            <Photos key={photo.docId} photo={photo} />
+          ))}
+        </div>
+        {!photosCollection ||
+          (photosCollection.length === 0 && (
+            <p className="text-center text-2xl">No Posts Yet</p>
+          ))}
+      </div>
     </>
   );
 };

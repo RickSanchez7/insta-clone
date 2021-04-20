@@ -14,7 +14,12 @@ const Post = ({ content }) => {
   // -> header, image, actions (like & comment icons), footer, comments
   return (
     <div className="rounded border bg-white border-gray-primary md:mb-12 mb-6 md:mx-1 mx-6">
-      <Header username={content.username} avatar={content.avatar} />
+      <Header
+        username={content.username}
+        avatar={content.avatar}
+        docId={content.docId}
+        postUserId={content.userId}
+      />
       <Image src={content.imageSrc} caption={content.caption} />
       <Actions
         docId={content.docId}
@@ -30,6 +35,7 @@ const Post = ({ content }) => {
         posted={content.dateCreated}
         commentInput={commentInput}
         content={content}
+        postUserId={content.userId}
       />
     </div>
   );

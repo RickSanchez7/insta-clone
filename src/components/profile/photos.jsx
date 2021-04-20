@@ -1,90 +1,79 @@
 /* eslint-disable no-nested-ternary */
-// import { useContext, useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-// import { firebase } from '../../lib/firebase';
-// import LoggedInUserContext from '../../context/logged-in-user';
-// import usePhotos from '../../hooks/use-photos';
+import { firebase } from '../../lib/firebase';
 
-const Photos = ({ photos }) => {
-  // const { user } = useContext(LoggedInUserContext);
-  // const { photos } = usePhotos(user);
-  // const [comments, setComments] = useState([]);
-  // console.log(comments);
-  // console.log(photos[0].docId);
+const Photos = ({ photo }) => {
+  const [commentsLength, setCommentsLength] = useState([]);
 
-  // useEffect(() => {
-  //   let unsubscribe;
-  //   if (photos[0]?.docId) {
-  //     unsubscribe = firebase
-  //       .firestore()
-  //       .collection('photos')
-  //       .doc(photos[0].docId)
-  //       .collection('comments')
-  //       .onSnapshot((snapshot) => {
-  //         setComments(snapshot.docs.map((doc) => doc.data()));
-  //       });
-  //   }
-  //   console.log('u', unsubscribe);
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [photos[0]?.docId]);
+  useEffect(() => {
+    const getUserCommentsLength = async (id) => {
+      const result = await firebase
+        .firestore()
+        .collection('photos')
+        .doc(id)
+        .collection('comments')
+        .onSnapshot((snapshot) => {
+          setCommentsLength(
+            snapshot.docs.map((doc) => ({
+              docId: doc.id,
+              ...doc.data(),
+            }))
+          );
+        });
+
+      return () => result();
+    };
+
+    getUserCommentsLength(photo?.docId);
+  }, []);
 
   return (
-    <div className="h-16 border-t border-gray-primary mt-12 pt-4">
-      <div className="grid grid-cols-3 md:gap-6 gap-4 mx-2  mt-4 mb-12">
-        {!photos ? (
-          <>
-            <Skeleton count={12} width={320} height={400} />
-          </>
-        ) : photos?.length > 0 ? (
-          photos.map((photo) => (
-            <div key={photo.docId} className="relative group">
-              <img src={photo.imageSrc} alt={photo.caption} />
+    <>
+      {!photo ? (
+        <>
+          <Skeleton count={12} width={320} height={400} />
+        </>
+      ) : photo ? (
+        <div className="relative group">
+          <img src={photo.imageSrc} alt={photo.caption} />
 
-              <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
-                <p className="flex items-center text-white font-bold">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="md:w-10 w-6 mr-1"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {photo.likes.length}
-                </p>
+          <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
+            <p className="flex items-center text-white font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="md:w-10 w-6 mr-1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {photo.likes.length}
+            </p>
 
-                <p className="flex items-center text-white font-bold">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="md:w-10 w-6 mr-1"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {/* {photo.comments.length} */}
-                </p>
-              </div>
-            </div>
-          ))
-        ) : null}
-      </div>
-
-      {!photos ||
-        (photos.length === 0 && (
-          <p className="text-center text-2xl">No Posts Yet</p>
-        ))}
-    </div>
+            <p className="flex items-center text-white font-bold">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="md:w-10 w-6 mr-1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {commentsLength.length}
+            </p>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 

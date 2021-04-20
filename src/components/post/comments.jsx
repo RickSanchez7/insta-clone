@@ -6,7 +6,7 @@ import { firebase } from '../../lib/firebase';
 import AddComment from './add-comment';
 import LoggedInUserContext from '../../context/logged-in-user';
 
-const Comments = ({ docId, posted, commentInput }) => {
+const Comments = ({ docId, posted, commentInput, postUserId }) => {
   const {
     user: { username, role },
   } = useContext(LoggedInUserContext);
@@ -67,7 +67,7 @@ const Comments = ({ docId, posted, commentInput }) => {
             </div>
             {(item.comments.displayName === username || role === 'admin') && (
               <svg
-                className="h-5 w-5 ml-auto cursor-pointer hover:text-red-primary fill-current"
+                className="h-5 w-5 ml-auto cursor-pointer hover:text-red-primary fill-current hover:text-red-primary transition-colors duration-200 ease-in-out"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -101,7 +101,11 @@ const Comments = ({ docId, posted, commentInput }) => {
           {formatDistance(posted, new Date())} ago
         </p>
       </div>
-      <AddComment docId={docId} commentInput={commentInput} />
+      <AddComment
+        docId={docId}
+        commentInput={commentInput}
+        postUserId={postUserId}
+      />
     </>
   );
 };

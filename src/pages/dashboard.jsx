@@ -26,8 +26,4 @@ const Dashboard = ({ user: loggedInUser }) => {
   );
 };
 
-// Dashboard.propTypes = {
-//   user: PropTypes.object.isRequired,
-// };
-
 export default Dashboard;

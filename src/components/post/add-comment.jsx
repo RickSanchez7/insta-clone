@@ -2,19 +2,19 @@ import { useState, useContext } from 'react';
 import { FirebaseContext } from '../../context/firebase';
 import LoggedInUserContext from '../../context/logged-in-user';
 
-const AddComment = ({ docId, commentInput }) => {
+const AddComment = ({ docId, commentInput, postUserId }) => {
   const [comment, setComment] = useState('');
   const { firebase, FieldValue } = useContext(FirebaseContext);
   const {
     user: { username },
   } = useContext(LoggedInUserContext);
 
-  const handleSubmitComment = (event) => {
+  const handleSubmitComment = async (event) => {
     event.preventDefault();
 
     setComment('');
 
-    return firebase
+    return await firebase
       .firestore()
       .collection('photos')
       .doc(docId)
@@ -23,8 +23,27 @@ const AddComment = ({ docId, commentInput }) => {
         text: comment,
         displayName: username,
         timestamp: FieldValue.serverTimestamp(),
+        postUserId,
       });
   };
+
+  // const getUserCommentsByUserId = async (userId, id) => {
+  //   const result = await firebase
+  //     .firestore()
+  //     .collection('photos')
+  //     .doc(id)
+  //     .collection('comments')
+  //     // .where('postUserId', '==', userId)
+  //     .get();
+
+  //   const comments = result.docs.map((cmt) => ({
+  //     ...cmt.data(),
+  //     docId: cmt.postUserId,
+  //   }));
+  //   return comments;
+  // };
+
+  // getUserCommentsByUserId(postUserId, docId);
 
   return (
     <div className="border-t border-gray-primary">

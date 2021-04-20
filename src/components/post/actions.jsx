@@ -1,21 +1,11 @@
 import { useState, useContext } from 'react';
 import { FirebaseContext } from '../../context/firebase';
 import UserContext from '../../context/user';
-import LoggedInUserContext from '../../context/logged-in-user';
 
-const Actions = ({
-  docId,
-  totalLikes,
-  likedPhoto,
-  handleFocus,
-  postUserId,
-}) => {
+const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
   const {
     user: { uid: userId },
   } = useContext(UserContext);
-  const {
-    user: { role },
-  } = useContext(LoggedInUserContext);
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useContext(FirebaseContext);
@@ -36,14 +26,10 @@ const Actions = ({
     setLikes((likesCount) => (toggleLiked ? likesCount - 1 : likesCount + 1));
   };
 
-  const deletePost = async () => {
-    await firebase.firestore().collection('photos').doc(docId).delete();
-  };
-
   return (
     <>
       <div className="flex justify-between md:px-4 px-2 md:py-4 py-2 my-0 md:m-h-14 m-h-10">
-        <div className="flex ">
+        <div className="flex items-center">
           <svg
             onClick={handleToggleLiked}
             onKeyDown={(event) => {
@@ -56,7 +42,7 @@ const Actions = ({
             viewBox="0 0 24 24"
             stroke="currentColor"
             tabIndex={0}
-            className={`md:w-8 w-6 md:h-8 h-6 mr-4 select-none cursor-pointer focus:outline-none ${
+            className={`md:w-8 w-6 md:h-8 h-6 mr-0 select-none cursor-pointer focus:outline-none ${
               toggleLiked
                 ? 'fill-red hover:fill-lightRed text-red-primary hover:text-red-secundary transition-colors duration-200'
                 : 'text-black-light hover:text-red-primary transition-colors duration-200'
@@ -69,6 +55,11 @@ const Actions = ({
               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
             />
           </svg>
+          <div className="ml-2 md:w-24 w-20 md:min-w-24 min-w-20">
+            <p className="font-bold ">
+              {likes === 1 ? `${likes} like` : `${likes} likes`}
+            </p>
+          </div>
           <svg
             onClick={handleFocus}
             onKeyDown={(event) => {
@@ -92,20 +83,6 @@ const Actions = ({
             &gt;
           </svg>
         </div>
-        {(postUserId === userId || role === 'admin') && (
-          <button
-            type="button"
-            onClick={deletePost}
-            className="font-bold hover:text-red-primary transition-colors duration-200 italic"
-          >
-            delete
-          </button>
-        )}
-      </div>
-      <div className="md:px-4 px-2">
-        <p className="font-bold">
-          {likes === 1 ? `${likes} like` : `${likes} likes`}
-        </p>
       </div>
     </>
   );
