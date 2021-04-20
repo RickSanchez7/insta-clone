@@ -45,7 +45,7 @@ const PostUpload = () => {
     const file = e.target.files;
 
     const types = ['image/png', 'image/jpeg'];
-    if (!types.includes(file[0].type)) {
+    if (!types.includes(file[0]?.type)) {
       return;
     }
     previewFile(file[0]);

@@ -64,11 +64,10 @@ const Header = ({ username, avatar, docId, postUserId }) => {
         </Link>
       </div>
       {(postUserId === userId || role === 'admin') && (
-        <div className="flex items-center relative">
+        <div ref={wrapperRef} className="flex items-center relative">
           <button
             type="button"
             onClick={showButton}
-            ref={wrapperRef}
             className="md:m-h-12 m-h-8 focus:outline-none"
           >
             <svg
@@ -89,7 +88,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
           <button
             type="button"
             onClick={deletePost}
-            className={`${button} absolute font-bold italic bg-white border border-gray-primary transition-all duration-200 rounded py-1 md:px-5 px-3 md:mt-10 mt-8 right-4 z-10`}
+            className={`${button} absolute font-bold italic bg-white border border-gray-primary transition-all duration-200 rounded py-1 md:px-5 px-3 md:mt-10 mt-6 right-4 z-10`}
           >
             <p className="hover:text-red-primary transition-colors duration-200 ease-in-out md:text-base text-sm">
               delete
