@@ -10,16 +10,6 @@ export const doesUsernameExist = async (username) => {
   return result.docs.map((user) => user.data().length > 0);
 };
 
-export const doesEmailExist = async (emailAddress) => {
-  const result = await firebase
-    .firestore()
-    .collection('users')
-    .where('email', '==', emailAddress)
-    .get();
-
-  return result.docs.map((email) => email.data().length > 0);
-};
-
 export const getUserByUsername = async (username) => {
   const result = await firebase
     .firestore()

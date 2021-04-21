@@ -12,7 +12,7 @@ const login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const isInvalid = password < 6 || email === '';
+  const isInvalid = password.length < 6 || email === '';
 
   const handleLogin = async (e) => {
     e.preventDefault();

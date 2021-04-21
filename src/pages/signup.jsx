@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import { doesUsernameExist, doesEmailExist } from '../services/firebase';
+import { doesUsernameExist } from '../services/firebase';
 
 const SignUp = () => {
   const history = useHistory();
@@ -16,7 +16,8 @@ const SignUp = () => {
 
   const [error, setError] = useState('');
 
-  const isInvalid = password === '' || email === '' || passwordConfirm === '';
+  const isInvalid =
+    password.length < 6 || email === '' || passwordConfirm.length < 6;
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -34,13 +35,6 @@ const SignUp = () => {
     }
 
     const usernameExists = await doesUsernameExist(username);
-    const emailExists = await doesEmailExist(email);
-
-    // verify if email is already in database
-    if (emailExists) {
-      setEmail('');
-      return setError('Email already exists');
-    }
 
     // verify if username is already in database
     if (!usernameExists.length) {
