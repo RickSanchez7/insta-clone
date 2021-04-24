@@ -1,11 +1,15 @@
 import { useState, useContext } from 'react';
 import { FirebaseContext } from '../../context/firebase';
-import UserContext from '../../context/user';
+import { useAuth } from '../../context/logged-in-user';
 
-const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
-  const {
-    user: { uid: userId },
-  } = useContext(UserContext);
+const Actions = ({
+  docId,
+  totalLikes,
+  likedPhoto,
+  handleFocus,
+  totalComments,
+}) => {
+  const { user } = useAuth();
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useContext(FirebaseContext);
@@ -19,8 +23,8 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
       .doc(docId)
       .update({
         likes: toggleLiked
-          ? FieldValue.arrayRemove(userId)
-          : FieldValue.arrayUnion(userId),
+          ? FieldValue.arrayRemove(user?.uid)
+          : FieldValue.arrayUnion(user?.uid),
       });
 
     setLikes((likesCount) => (toggleLiked ? likesCount - 1 : likesCount + 1));
@@ -82,6 +86,9 @@ const Actions = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
             />
             &gt;
           </svg>
+          <div className="ml-2 md:w-24 w-20 md:min-w-24 min-w-20">
+            <p className="font-bold ">{totalComments}</p>
+          </div>
         </div>
       </div>
     </>

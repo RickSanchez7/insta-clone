@@ -1,15 +1,18 @@
 import { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
-import UserContext from '../context/user';
+import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
-import useUser from '../hooks/use-user';
+import { useAuth } from '../context/logged-in-user';
 
 const Header = () => {
-  const { user: loggedInUser } = useContext(UserContext);
-  const { user } = useUser(loggedInUser?.uid);
+  // const { user: loggedInUser } = useContext(UserContext);
+  const { user: loggedInUser } = useAuth();
+  const { user } = useContext(UserContext);
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
+
+  if (!loggedInUser) return null;
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">

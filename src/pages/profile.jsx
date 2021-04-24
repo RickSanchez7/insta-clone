@@ -2,7 +2,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUserByUsername } from '../services/firebase';
 import * as ROUTES from '../constants/routes';
-import Header from '../components/header';
 import UserProfile from '../components/profile';
 
 export default function Profile() {
@@ -25,7 +24,6 @@ export default function Profile() {
 
   return userProfile?.username ? (
     <div className="bg-gray-background">
-      <Header />
       <div className="mx-auto max-w-screen-lg">
         <UserProfile user={userProfile} />
       </div>

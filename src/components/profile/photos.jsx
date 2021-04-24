@@ -1,33 +1,8 @@
 /* eslint-disable no-nested-ternary */
-import { useState, useEffect } from 'react';
+
 import Skeleton from 'react-loading-skeleton';
-import { firebase } from '../../lib/firebase';
 
 const Photos = ({ photo }) => {
-  const [commentsLength, setCommentsLength] = useState([]);
-
-  useEffect(() => {
-    const getUserCommentsLength = async (id) => {
-      const result = await firebase
-        .firestore()
-        .collection('photos')
-        .doc(id)
-        .collection('comments')
-        .onSnapshot((snapshot) => {
-          setCommentsLength(
-            snapshot.docs.map((doc) => ({
-              docId: doc.id,
-              ...doc.data(),
-            }))
-          );
-        });
-
-      return () => result();
-    };
-
-    getUserCommentsLength(photo?.docId);
-  }, []);
-
   return (
     <>
       {!photo ? (
@@ -68,7 +43,7 @@ const Photos = ({ photo }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              {commentsLength.length}
+              {photo.totalComments}
             </p>
           </div>
         </div>

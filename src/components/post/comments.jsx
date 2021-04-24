@@ -1,18 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { formatDistance } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { firebase } from '../../lib/firebase';
+import { FieldValue, firebase } from '../../lib/firebase';
 
 import AddComment from './add-comment';
-import LoggedInUserContext from '../../context/logged-in-user';
+import { UserContext } from '../../context/user';
 
 const Comments = ({ docId, posted, commentInput, postUserId }) => {
   const {
     user: { username, role },
-  } = useContext(LoggedInUserContext);
+  } = useContext(UserContext);
 
   const [commentsSlice, setCommentsSlice] = useState(2);
   const [comments, setComments] = useState([]);
+  const [error, setError] = useState('');
 
   const showNextComments = () => {
     setCommentsSlice(commentsSlice + 3);
@@ -27,7 +28,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
         .collection('photos')
         .doc(docId)
         .collection('comments')
-        .orderBy('timestamp', 'asc')
+        .orderBy('timestamp', 'desc')
         .onSnapshot((snapshot) => {
           setComments(
             snapshot.docs.map((doc) => ({
@@ -42,14 +43,27 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
     };
   }, [docId]);
 
-  const deleteComment = (id) => {
-    firebase
-      .firestore()
-      .collection('photos')
-      .doc(docId)
-      .collection('comments')
-      .doc(id)
-      .delete();
+  const deleteComment = async (id) => {
+    setError('');
+    try {
+      await firebase
+        .firestore()
+        .collection('photos')
+        .doc(docId)
+        .update({
+          totalComments: FieldValue.increment(-1),
+        });
+
+      await firebase
+        .firestore()
+        .collection('photos')
+        .doc(docId)
+        .collection('comments')
+        .doc(id)
+        .delete();
+    } catch (err) {
+      setError('Something went wrong');
+    }
   };
 
   return (
@@ -97,6 +111,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
             View more comments
           </button>
         )}
+        {error && <p className="text-red-primary">error</p>}
         <p className="text-gray-base uppercase text-xs md:mt-2 mt-1">
           {formatDistance(posted, new Date())} ago
         </p>
@@ -105,6 +120,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
         docId={docId}
         commentInput={commentInput}
         postUserId={postUserId}
+        username={username}
       />
     </>
   );

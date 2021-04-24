@@ -2,8 +2,6 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 
-// import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
-
 const User = ({ username, fullName, avatar }) => {
   return !username || !fullName ? (
     <Skeleton count={1} height={61} />
@@ -14,7 +12,7 @@ const User = ({ username, fullName, avatar }) => {
     >
       <div className="flex items-center justify-evenly">
         <img
-          className="rounded-full md:w-16 md:h-16 w-9 h-9 flex md:mr-3 mr-1 border border-red-primary"
+          className="rounded-full md:w-20 md:h-20 w-9 h-9 flex md:mr-3 mr-1 border border-red-primary"
           src={`${avatar}`}
           alt={`${username}`}
         />

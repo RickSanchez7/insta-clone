@@ -179,6 +179,7 @@ export const postUpload = async (imageUrl, caption, userId) => {
   const post = firebase.firestore().collection('photos').add({
     caption,
     dateCreated: Date.now(),
+    totalComments: 0,
     imageSrc: imageUrl,
     likes: [],
     userId,
@@ -190,4 +191,20 @@ export const updateAvatar = async (imageUrl, userId) => {
   return firebase.firestore().collection('users').doc(userId).update({
     avatar: imageUrl,
   });
+};
+
+export const updateImage = async (imageUrl, docId) => {
+  const image = firebase.firestore().collection('photos').doc(docId).update({
+    imageSrc: imageUrl,
+  });
+
+  return image;
+};
+
+export const updatePostMessage = async (message, docId) => {
+  const caption = firebase.firestore().collection('photos').doc(docId).update({
+    caption: message,
+  });
+
+  return caption;
 };

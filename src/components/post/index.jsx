@@ -27,6 +27,7 @@ const Post = ({ content }) => {
         likedPhoto={content.userLikedPhoto}
         handleFocus={handleFocus}
         postUserId={content.userId}
+        totalComments={content.totalComments}
       />
       <Footer caption={content.caption} />
       <Comments

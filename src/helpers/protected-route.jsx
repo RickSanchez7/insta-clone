@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
+import { useAuth } from '../context/logged-in-user';
 
-const ProtectedRoute = ({ user, children, ...rest }) => {
+const ProtectedRoute = ({ children, ...rest }) => {
+  const { user } = useAuth();
   return (
     <Route
       {...rest}

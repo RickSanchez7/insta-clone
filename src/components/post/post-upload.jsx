@@ -1,7 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { postUpload } from '../../services/firebase';
-import LoggedInUserContext from '../../context/logged-in-user';
+import { useAuth } from '../../context/logged-in-user';
 import ReactLoader from '../loader';
+
+function useHasUnmountedRef() {
+  const hasUnmountedRef = useRef(false);
+  useEffect(() => {
+    return () => {
+      hasUnmountedRef.current = true;
+    };
+  }, []);
+  return hasUnmountedRef;
+}
 
 const PostUpload = () => {
   const [caption, setCaption] = useState('');
@@ -11,7 +21,7 @@ const PostUpload = () => {
   const [loading, setLoading] = useState(false);
   // const [error, setError] = useState('');
 
-  const { user } = useContext(LoggedInUserContext);
+  const { user } = useAuth();
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -21,20 +31,30 @@ const PostUpload = () => {
     };
   };
 
+  const hasUnmountedRef = useHasUnmountedRef();
+
   const handleUpload = async (e) => {
     e.preventDefault();
+
+    if (hasUnmountedRef.current) {
+      // escape early because component has unmounted
+      return;
+    }
+
     if (!selectedFile) return;
+
+    setLoading(true);
     const data = new FormData();
     data.append('file', selectedFile[0]);
     data.append('upload_preset', 'ricardo');
-    setLoading(true);
+
     const res = await fetch(process.env.REACT_APP_CLOUDINARY_URL, {
       method: 'POST',
       body: data,
     });
     const file = await res.json();
 
-    postUpload(file.secure_url, caption, user?.userId);
+    postUpload(file.secure_url, caption, user?.uid);
     setCaption('');
     setPreviewSource('');
     setSelectedFile('');
@@ -65,7 +85,7 @@ const PostUpload = () => {
         <input
           className="opacity-0 h-0 w-0"
           type="file"
-          name="file"
+          name="photo"
           onChange={handleFileInputChange}
         />
         <span className="md:mb-2 mb-1">+</span>

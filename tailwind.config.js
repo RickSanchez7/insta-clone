@@ -10,10 +10,16 @@ module.exports = {
       red: theme('colors.red.primary'),
       lightRed: theme('colors.red.secundary'),
     }),
+    extend: {
+      transitionProperty: {
+        height: 'height',
+      },
+    },
     colors: {
       white: '#ffffff',
       blue: {
         medium: '#005c98',
+        darker: '#1e40af',
         light: '#72bcd4',
       },
       black: {
@@ -28,6 +34,9 @@ module.exports = {
       red: {
         primary: '#ed4956',
         secundary: '#ff5c68',
+      },
+      green: {
+        primary: '#10b981',
       },
     },
   },

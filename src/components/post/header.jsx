@@ -2,32 +2,29 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
 import { FirebaseContext } from '../../context/firebase';
-import LoggedInUserContext from '../../context/logged-in-user';
-import UserContext from '../../context/user';
+import { UserContext } from '../../context/user';
 
 const Header = ({ username, avatar, docId, postUserId }) => {
   const image = avatar !== undefined ? avatar : DEFAULT_IMAGE_PATH;
 
-  const [button, setButton] = useState('hidden opacity-0');
+  const [button, setButton] = useState('hidden');
 
   const { firebase } = useContext(FirebaseContext);
   const {
-    user: { uid: userId },
+    user: { userId, role },
   } = useContext(UserContext);
-  const {
-    user: { role },
-  } = useContext(LoggedInUserContext);
 
   const showButton = () => {
-    if (button === 'hidden opacity-0') return setButton('flex opacity-100');
-    return setButton('hidden opacity-0');
+    if (button === 'hidden') return setButton('');
+    return setButton('hidden');
   };
 
   const deletePost = async () => {
     await firebase.firestore().collection('photos').doc(docId).delete();
-    setButton('hidden opacity-0');
+    setButton('hidden');
   };
 
   // Close dropdown when clicking outside
@@ -35,7 +32,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
     useEffect(() => {
       const handleClickOutside = (e) => {
         if (ref.current && !ref.current.contains(e.target)) {
-          setButton('hidden opacity-0');
+          setButton('hidden');
         }
       };
 
@@ -85,15 +82,25 @@ const Header = ({ username, avatar, docId, postUserId }) => {
               />
             </svg>
           </button>
-          <button
-            type="button"
-            onClick={deletePost}
-            className={`${button} absolute font-bold italic bg-white border border-gray-primary transition-all duration-200 rounded py-1 md:px-5 px-3 md:mt-10 mt-6 right-4 z-10`}
+          <div
+            className={`${button} absolute flex flex-col md:mt-20 mt-16 bg-white border border-gray-primary shadow-md z-10 right-4 rounded py-1`}
           >
-            <p className="hover:text-red-primary transition-colors duration-200 ease-in-out md:text-base text-sm">
-              delete
-            </p>
-          </button>
+            <button
+              type="button"
+              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary"
+            >
+              <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
+                edit
+              </Link>
+            </button>
+            <button
+              type="button"
+              onClick={deletePost}
+              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary"
+            >
+              <p className="md:text-base text-sm">delete</p>
+            </button>
+          </div>
         </div>
       )}
     </div>

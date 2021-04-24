@@ -1,22 +1,22 @@
 /* eslint-disable no-nested-ternary */
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState, memo, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { motion } from 'framer-motion';
 
-import LoggedInUserContext from '../context/logged-in-user';
-// import usePhotos from '../hooks/use-photos';
 import Post from './post';
 import PostUpload from './post/post-upload';
 
 import { firebase } from '../lib/firebase';
 import { getUserByUserId } from '../services/firebase';
+import { UserContext } from '../context/user';
+import ReactLoader from './loader';
 
 const Timeline = () => {
-  const { user } = useContext(LoggedInUserContext);
+  const { user } = useContext(UserContext);
 
   const [userPhotos, setUserPhotos] = useState([]);
   const [detailedPhotos, setDetailedPhotos] = useState([]);
-  const [pages, setPages] = useState(10);
+  const [pages, setPages] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Timeline = () => {
       .firestore()
       .collection('photos')
       .orderBy('dateCreated', 'desc')
-      .limit(pages)
+      .limit(10)
       .onSnapshot((snapshot) => {
         setUserPhotos(
           snapshot.docs.map((doc) => ({
@@ -35,7 +35,28 @@ const Timeline = () => {
       });
 
     return () => photo();
-  }, [user?.docId, pages]);
+  }, []);
+
+  const fetchNextPhotos = () => {
+    firebase
+      .firestore()
+      .collection('photos')
+      .orderBy('dateCreated', 'desc')
+      .limit(10)
+      .startAfter(userPhotos[userPhotos.length - 1].dateCreated)
+      .onSnapshot((snapshot) => {
+        const items = [];
+        snapshot.forEach((doc) => {
+          items.push({ docId: doc.id, ...doc.data() });
+        });
+        setUserPhotos([...userPhotos, ...items]);
+      });
+
+    if (pages !== userPhotos.length) {
+      return setPages((prev) => prev + 2);
+    }
+    setPages(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -60,15 +81,11 @@ const Timeline = () => {
     func();
   }, [userPhotos]);
 
-  const morePages = () => {
-    setPages((prev) => prev + 5);
-  };
-
   return (
     <div className="container flex flex-col md:col-span-2 col-span-3">
       <PostUpload />
-      {!detailedPhotos ? (
-        <Skeleton count={4} width={640} height={500} className="mb-5" />
+      {!detailedPhotos.length ? (
+        <Skeleton count={4} width={550} height={500} className="mb-5" />
       ) : (
         detailedPhotos.map((content) => (
           <motion.div key={content.docId} layout>
@@ -76,15 +93,21 @@ const Timeline = () => {
           </motion.div>
         ))
       )}
-      <button
-        type="button"
-        className="bg-blue-medium hover:bg-blue-light transition-colors duaration-200 text-white font-bold py-2 px-4 rounded-full mb-12 self-center"
-        onClick={morePages}
-      >
-        {loading ? 'Loading' : 'More'}
-      </button>
+      {pages !== false && (
+        <button
+          type="button"
+          className="bg-blue-medium hover:bg-blue-light transition-colors duaration-200 text-white font-bold py-2 px-4 rounded-full mb-12 self-center md:w-20 w-16 md:h-10 h-8"
+          onClick={fetchNextPhotos}
+        >
+          {!loading ? (
+            <ReactLoader height={15} width={15} color="white" />
+          ) : (
+            'More'
+          )}
+        </button>
+      )}
     </div>
   );
 };
 
-export default Timeline;
+export default memo(Timeline);

@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import User from './user';
 import Suggestions from './suggestions';
-import LoggedInUserContext from '../../context/logged-in-user';
+import { UserContext } from '../../context/user';
 
 const Sidebar = () => {
   const {
     user: { docId = '', fullName, username, userId, following, avatar } = {},
-  } = useContext(LoggedInUserContext);
+  } = useContext(UserContext);
 
   return (
     <div className="md:p-4 p-0">

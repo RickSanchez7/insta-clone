@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { useState, useEffect, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import useUser from '../../hooks/use-user';
 import {
   isUserFollowingProfile,
   toggleFollow,
   updateAvatar,
 } from '../../services/firebase';
-import UserContext from '../../context/user';
+import { UserContext } from '../../context/user';
 
 const Header = ({
   photosCount,
@@ -23,8 +22,7 @@ const Header = ({
     avatar,
   },
 }) => {
-  const { user: loggedInUser } = useContext(UserContext);
-  const { user } = useUser(loggedInUser?.uid);
+  const { user } = useContext(UserContext);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
 
@@ -84,7 +82,7 @@ const Header = ({
     if (!image) return;
     const data = new FormData();
     data.append('file', image[0]);
-    data.append('upload_preset', 'ricardo');
+    data.append('upload_preset', 'insta-profile');
     setLoading(true);
     const res = await fetch(
       'https://api.cloudinary.com/v1_1/drqvkgn34/image/upload',
