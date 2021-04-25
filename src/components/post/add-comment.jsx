@@ -45,7 +45,7 @@ const AddComment = ({ docId, commentInput, postUserId, username }) => {
         <input
           aria-label="Add a comment"
           autoComplete="off"
-          className="md:text-sm text-xs text-gray-base w-full mr-3 md:py-5 py-3 md:px-4 px-2"
+          className="md:text-sm text-xs text-gray-base dark:text-white dark:bg-gray-base w-full mr-3 md:py-5 py-3 md:px-4 px-2"
           type="text"
           name="add-comment"
           placeholder="Add a comment..."
@@ -54,7 +54,7 @@ const AddComment = ({ docId, commentInput, postUserId, username }) => {
           ref={commentInput}
         />
         <button
-          className={`md:text-sm text-xs font-bold text-blue-medium ${
+          className={`md:text-sm text-xs font-bold text-blue-medium dark:text-white ${
             !comment && 'opacity-25'
           }`}
           type="button"

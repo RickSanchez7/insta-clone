@@ -45,7 +45,7 @@ const Profile = ({ user }) => {
         </div>
         {!photosCollection ||
           (photosCollection.length === 0 && (
-            <p className="text-center text-2xl">No Posts Yet</p>
+            <p className="text-center text-2xl dark:text-white">No Posts Yet</p>
           ))}
       </div>
     </>

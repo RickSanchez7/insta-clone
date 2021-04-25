@@ -34,7 +34,7 @@ const Header = () => {
   }, [user]);
 
   return (
-    <header className="h-16 bg-white border-b border-gray-primary mb-8">
+    <header className="h-16 bg-white dark:bg-black-light border-b border-gray-primary dark:border-gray-base transition-colors duration-200 mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
         <div className="flex justify-between h-full">
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
@@ -53,7 +53,7 @@ const Header = () => {
               <>
                 <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
                   <svg
-                    className="md:w-8 w-6 mr-6 text-black-light cursor-pointer hover:text-red-primary fill-current"
+                    className="md:w-8 w-6 mr-6 text-black-light dark:text-white cursor-pointer hover:text-red-primary fill-current"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ const Header = () => {
                   }}
                 >
                   <svg
-                    className="md:w-8 w-6 mr-6 text-black-light cursor-pointer hover:text-red-primary fill-current"
+                    className="md:w-8 w-6 mr-6 text-black-light dark:text-white cursor-pointer hover:text-red-primary fill-current"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"

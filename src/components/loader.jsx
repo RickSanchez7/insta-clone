@@ -7,7 +7,7 @@ const ReactLoader = ({ height = 70, width = 70, color = '#000000' }) => {
       color={color}
       height={height}
       width={width}
-      className="flex justify-center"
+      className="flex justify-center text-white"
     />
   );
 };

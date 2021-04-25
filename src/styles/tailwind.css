@@ -1,8 +1,16 @@
 @tailwind base;
 @tailwind components;
 
-body {
+.dark {
+  @apply bg-black-light;
+  @apply transition-colors;
+  @apply duration-200;
+}
+
+.light {
   @apply bg-gray-background;
+  @apply transition-colors;
+  @apply duration-200;
 }
 
 @tailwind utilities;

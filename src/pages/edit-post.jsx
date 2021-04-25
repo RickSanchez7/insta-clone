@@ -128,18 +128,24 @@ const Editpost = () => {
         </svg>
       );
     }
+
+    const color =
+      window.document.getElementsByTagName('html')[0].className === 'light'
+        ? '#000000'
+        : '#fafafa';
+
     if (loading) {
-      return <ReactLoader height={15} width={15} />;
+      return <ReactLoader height={15} width={15} color={color} />;
     }
     return 'Save';
   };
 
   return (
-    <div className="rounded border bg-white border-gray-primary md:mb-12 mb-6 mx-auto md:w-auto w-4/5 max-w-lg flex flex-col">
+    <div className="rounded border bg-white dark:bg-gray-base border-gray-primary md:mb-12 mb-6 mx-auto md:w-auto w-4/5 max-w-lg flex flex-col">
       <form>
         <div className="flex border-b border-gray-primary h-4 md:px-4 px-2 md:py-8 py-5 justify-between items-center">
           <button
-            className={`text-blue-medium hover:text-red-primary transition-colors duration-200 font-bold md:text-sm text-xs ${
+            className={`text-blue-medium dark:text-blue-light hover:text-red-primary dark:hover:text-red-primary transition-colors duration-200 font-bold md:text-sm text-xs ${
               !validateChanges && 'hidden'
             }`}
             type="button"
@@ -147,7 +153,7 @@ const Editpost = () => {
           >
             Reset Changes
           </button>
-          <label className="flex items-center justify-center  md:text-3xl text-xl hover:text-red-primary transition-colors duration-200 cursor-pointer ml-auto">
+          <label className="flex items-center justify-center  md:text-3xl text-xl dark:text-white hover:text-red-primary dark:hover:text-red-primary transition-colors duration-200 cursor-pointer ml-auto">
             <input
               className="opacity-0 h-0 w-0"
               type="file"
@@ -165,7 +171,7 @@ const Editpost = () => {
           <input
             aria-label="Add a message"
             autoComplete="off"
-            className="md:text-sm text-xs text-gray-base w-full md:mr-3 mr-1 md:py-5 py-3 md:px-4 px-2"
+            className="md:text-sm text-xs dark:bg-gray-base text-gray-base dark:text-white w-full md:mr-3 mr-1 md:py-5 py-3 md:px-4 px-2"
             type="text"
             name="add-message"
             placeholder="Add a message..."
@@ -174,7 +180,7 @@ const Editpost = () => {
           />
 
           <button
-            className="md:text-sm text-xs font-bold text-blue-medium hover:text-blue-darker transition-colors duration-200 focus:outline-none"
+            className="md:text-sm text-xs font-bold text-blue-medium dark:text-white hover:text-blue-darker transition-colors duration-200 focus:outline-none"
             type="button"
             onClick={handleChanges}
           >

@@ -43,7 +43,9 @@ const SuggestedProfile = ({
         </Link>
         <div className="md:flex hidden md:flex-row flex-col items-center md:justify-between w-full">
           <Link to={`/p/${profileId}`}>
-            <p className="font-bold md:text-base text-sm ml-2">{username}</p>
+            <p className="font-bold dark:text-white md:text-base text-sm ml-2">
+              {username}
+            </p>
           </Link>
           <button
             className="md:text-base text-xs font-bold text-blue-medium"

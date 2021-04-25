@@ -48,8 +48,8 @@ const Actions = ({
             tabIndex={0}
             className={`md:w-8 w-6 md:h-8 h-6 mr-0 select-none cursor-pointer focus:outline-none ${
               toggleLiked
-                ? 'fill-red hover:fill-lightRed text-red-primary hover:text-red-secundary transition-colors duration-200'
-                : 'text-black-light hover:text-red-primary transition-colors duration-200'
+                ? 'fill-red dark:fill-red hover:fill-lightRed text-red-primary dark:text-red-primary hover:text-red-secundary dark:hover:text-red-secundary transition-colors duration-200'
+                : 'text-black-light dark:text-white hover:text-red-primary dark:hover:text-red-primary transition-colors duration-200'
             }`}
           >
             <path
@@ -60,7 +60,7 @@ const Actions = ({
             />
           </svg>
           <div className="ml-2 md:w-24 w-20 md:min-w-24 min-w-20">
-            <p className="font-bold ">
+            <p className="font-bold dark:text-white">
               {likes === 1 ? `${likes} like` : `${likes} likes`}
             </p>
           </div>
@@ -71,7 +71,7 @@ const Actions = ({
                 handleFocus();
               }
             }}
-            className="md:w-8 w-6 md:h-8 h-6 text-black-light hover:text-gray-base transition-colors duration-200 select-none cursor-pointer focus:outline-none"
+            className="md:w-8 w-6 md:h-8 h-6 text-black-light dark:text-white hover:text-gray-base dark:hover:text-black-faded transition-colors duration-200 select-none cursor-pointer focus:outline-none"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -87,7 +87,7 @@ const Actions = ({
             &gt;
           </svg>
           <div className="ml-2 md:w-24 w-20 md:min-w-24 min-w-20">
-            <p className="font-bold ">{totalComments}</p>
+            <p className="font-bold dark:text-white">{totalComments}</p>
           </div>
         </div>
       </div>

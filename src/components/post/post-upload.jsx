@@ -73,7 +73,7 @@ const PostUpload = () => {
   };
 
   return (
-    <div className="rounded col-span-4 border bg-white border-gray-primary md:mb-12 mb-5 md:mx-1 mx-6">
+    <div className="rounded col-span-4 border bg-white dark:bg-gray-base border-gray-primary md:mb-12 mb-5 md:mx-1 mx-6">
       {previewSource && (
         <img
           src={previewSource}
@@ -95,14 +95,14 @@ const PostUpload = () => {
           type="text"
           aria-label="Add a text"
           autoComplete="off"
-          className="md:text-sm text-xs text-gray-base w-full mr-3 md:py-5 py-2 md:px-4 px-2 outline-none"
+          className="md:text-sm dark:bg-gray-base text-xs text-gray-base dark:text-white w-full mr-3 md:py-5 py-2 md:px-4 px-2 outline-none"
           name="add-text"
           placeholder="Add a text..."
           value={caption}
           onChange={({ target }) => setCaption(target.value)}
         />
         <button
-          className={`md:text-sm text-xs font-bold text-blue-medium mr-2 focus:outline-none ${
+          className={`md:text-sm text-xs font-bold text-blue-medium dark:text-white mr-2 focus:outline-none ${
             !caption && 'opacity-25'
           }`}
           type="button"

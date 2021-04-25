@@ -117,8 +117,13 @@ const EditProfile = () => {
         </svg>
       );
     }
+
+    const color =
+      window.document.getElementsByTagName('html')[0].className === 'light'
+        ? '#000000'
+        : '#fafafa';
     if (loading) {
-      return <ReactLoader height={16} width={16} />;
+      return <ReactLoader height={16} width={16} color={color} />;
     }
     return 'Save Changes';
   };
@@ -145,10 +150,6 @@ const EditProfile = () => {
 
   const imagePreview = image || profileDetails.avatar;
 
-  const handleDark = () => {
-    localStorage.setItem('theme', 'dark');
-  };
-
   return (
     <div className="flex flex-col items-center">
       {!profileDetails ? (
@@ -160,7 +161,7 @@ const EditProfile = () => {
             alt={profileDetails.username}
             className="md:w-48 w-40 md:h-48 h-40 rounded-full border border-red-primary mx-auto"
           />
-          <label className="flex items-center justify-center text-blue-light hover:text-blue-medium transition-colors duration-200 cursor-pointer">
+          <label className="flex items-center justify-center text-blue-light dark:text-white hover:text-blue-medium dark:hover:text-blue-medium transition-colors duration-200 cursor-pointer">
             <input
               className="opacity-0 h-0 w-0"
               type="file"
@@ -177,7 +178,7 @@ const EditProfile = () => {
               <input
                 aria-label="Add a Full Name"
                 autoComplete="off"
-                className="md:text-sm text-xs w-full md:mr-3 mr-1 md:pt-3 pt-2 border-b bg-gray-background border-gray-primary"
+                className="md:text-sm text-xs w-full md:mr-3 mr-1 md:pt-3 pt-2 border-b bg-gray-background border-gray-primary dark:bg-black-light dark:text-white"
                 type="text"
                 name="add-fullName"
                 placeholder="Add full name..."
@@ -190,7 +191,7 @@ const EditProfile = () => {
               <input
                 aria-label="Add a Full Name"
                 autoComplete="off"
-                className="md:text-sm text-xs w-full md:mr-3 mr-1 md:pt-3 pt-2 border-b bg-gray-background border-gray-primary"
+                className="md:text-sm text-xs w-full md:mr-3 mr-1 md:pt-3 pt-2 border-b bg-gray-background border-gray-primary dark:bg-black-light dark:text-white"
                 type="text"
                 name="add-fullName"
                 placeholder="Add full name..."
@@ -205,7 +206,7 @@ const EditProfile = () => {
               type="button"
               className={`bg-gray-background hover:bg-blue-light text-blue-medium ${
                 profileSaved && 'text-green-primary'
-              } hover:text-white transition-colors duration-200 border rounded px-3 py-1 focus:outline-none w-28 h-8 md:text-sm text-xs mx-auto`}
+              } hover:text-white transition-colors duration-200 border rounded px-3 py-1 focus:outline-none w-28 h-8 md:text-sm text-xs mx-auto dark:bg-black-light dark:hover:bg-black-faded dark:text-white`}
               onClick={handleChanges}
             >
               {textButton()}
@@ -213,9 +214,6 @@ const EditProfile = () => {
           </div>
         </div>
       )}
-      <button type="button" onClick={handleDark}>
-        darkMode
-      </button>
     </div>
   );
 };

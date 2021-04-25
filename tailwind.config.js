@@ -5,6 +5,7 @@ module.exports = {
   purge: {
     content: ['./src/**/*.js', './src/**/**/*.js'],
   },
+  darkMode: 'class',
   theme: {
     fill: (theme) => ({
       red: theme('colors.red.primary'),
@@ -15,7 +16,6 @@ module.exports = {
         height: 'height',
       },
     },
-    darkMode: 'media',
     colors: {
       white: '#ffffff',
       blue: {
@@ -40,6 +40,7 @@ module.exports = {
       green: {
         primary: '#10b981',
       },
+      yellow: '#fbbf24',
     },
   },
   variants: {

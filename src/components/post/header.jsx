@@ -63,7 +63,9 @@ const Header = ({ username, avatar, docId, postUserId }) => {
             src={image}
             alt={`${username} profile picture`}
           />
-          <p className="font-bold md:text-base text-sm">{username}</p>
+          <p className="font-bold md:text-base dark:text-white dark:hover:text-black-light text-sm transition-colors duration-200">
+            {username}
+          </p>
         </Link>
       </div>
       {(postUserId === userId || role === 'admin') && (
@@ -75,7 +77,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 hover:text-red-primary transition-colors duration-200 ease-in-out"
+              className="h-6 w-6 dark:text-white hover:text-red-primary dark:hover:text-black-light transition-colors duration-200 ease-in-out"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -91,13 +93,13 @@ const Header = ({ username, avatar, docId, postUserId }) => {
           <motion.div
             animate={button !== 'hidden' ? 'open' : 'closed'}
             variants={variants}
-            transition={{ duration: 0.2 }}
-            className={`${button} absolute flex flex-col md:mt-20 mt-16 bg-white border border-gray-primary shadow-md z-10 right-4 rounded py-1`}
+            transition={{ duration: 0.15 }}
+            className={`${button} absolute flex flex-col md:mt-20 mt-16 bg-white dark:bg-black-light border border-gray-primary dark:border-white shadow-md z-10 right-4 rounded py-1`}
           >
             <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
               <button
                 type="button"
-                className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary md:w-24 w-20"
+                className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20"
               >
                 edit
               </button>
@@ -105,7 +107,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
             <button
               type="button"
               onClick={deletePost}
-              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary md:w-24 w-20"
+              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20"
             >
               <p className="md:text-base text-sm">delete</p>
             </button>

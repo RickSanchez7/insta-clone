@@ -71,7 +71,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
       <div className="md:px-4 px-2 md:py-4 py-2">
         {comments?.slice(0, commentsSlice).map((item) => (
           <div key={item.id} className="mb-1 flex items-center">
-            <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-xs">
+            <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-xs dark:text-white">
               <Link to={`/p/${item.comments.displayName}`}>
                 <span className="mr-1 font-bold">
                   {item.comments.displayName}
@@ -81,7 +81,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
             </div>
             {(item.comments.displayName === username || role === 'admin') && (
               <svg
-                className="h-5 w-5 ml-auto cursor-pointer hover:text-red-primary fill-current hover:text-red-primary transition-colors duration-200 ease-in-out"
+                className="h-5 w-5 ml-auto cursor-pointer dark:text-white hover:text-red-primary fill-current dark:hover:text-red-primary transition-colors duration-200 ease-in-out"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -99,7 +99,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
         ))}
         {comments.length >= 3 && commentsSlice < comments.length && (
           <button
-            className="text-sm text-gray-base mb-1 cursor-pointer focus:outline-none"
+            className="text-sm text-gray-base dark:text-white mb-1 cursor-pointer focus:outline-none"
             type="button"
             onClick={showNextComments}
             onKeyDown={(event) => {
@@ -112,7 +112,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
           </button>
         )}
         {error && <p className="text-red-primary">error</p>}
-        <p className="text-gray-base uppercase text-xs md:mt-2 mt-1">
+        <p className="text-gray-base dark:text-white uppercase text-xs md:mt-2 mt-1">
           {formatDistance(posted, new Date())} ago
         </p>
       </div>

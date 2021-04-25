@@ -18,8 +18,10 @@ const User = ({ username, fullName, avatar, userId }) => {
         />
       </div>
       <div>
-        <p className="font-bold md:text-base text-xs">{username}</p>
-        <p className="md:text-base text-xs">{fullName}</p>
+        <p className="font-bold dark:text-white md:text-base text-xs">
+          {username}
+        </p>
+        <p className="dark:text-white md:text-base text-xs">{fullName}</p>
       </div>
     </Link>
   );
