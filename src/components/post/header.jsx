@@ -94,7 +94,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
             animate={button !== 'hidden' ? 'open' : 'closed'}
             variants={variants}
             transition={{ duration: 0.15 }}
-            className={`${button} absolute flex flex-col md:mt-20 mt-16 bg-white dark:bg-black-light border border-gray-primary dark:border-white shadow-md z-10 right-4 rounded py-1`}
+            className={`${button} absolute flex flex-col md:mt-20 mt-10 bg-white dark:bg-black-light border border-gray-primary dark:border-white shadow-md z-10 right-4 rounded py-1`}
           >
             <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
               <button

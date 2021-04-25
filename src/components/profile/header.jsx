@@ -22,7 +22,7 @@ const Header = ({
 }) => {
   const { user } = useContext(UserContext);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeBtnFollow = user?.username && user?.username !== profileUsername;
+  const validateUser = user?.username !== profileUsername;
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowing) => !isFollowing);
@@ -63,11 +63,11 @@ const Header = ({
       </div>
       <div className="flex items-center justify-center flex-col">
         <div className="container flex items-center">
-          <p className="md:text-2xl dark:text-white text-xl mr-4 mr-auto">
+          <p className="md:text-2xl dark:text-white text-xl mr-4">
             {profileUsername}
           </p>
-          <DarkMode />
-          {activeBtnFollow && (
+
+          {validateUser && (
             <button
               className="bg-blue-medium dark:bg-black-light border dark:border-gray-primary hover:bg-blue-light dark:hover:bg-black-faded font-bold text-sm rounded text-white w-20 h-8 transition-colors duration-200"
               type="button"
@@ -81,6 +81,7 @@ const Header = ({
               {isFollowingProfile ? 'Unfollow' : 'Follow'}
             </button>
           )}
+          {!validateUser && <DarkMode />}
         </div>
         <div className="container flex mt-4">
           {!followers || !following ? (
@@ -108,6 +109,7 @@ const Header = ({
             </>
           )}
         </div>
+
         <div className="container mt-4">
           <p className="font-medium dark:text-white">
             {!fullName ? <Skeleton count={1} height={24} /> : fullName}

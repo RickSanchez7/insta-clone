@@ -8,7 +8,7 @@ const DarkMode = () => {
   return (
     <motion.div
       animate
-      className="relative transition duration-500 ease-in-out rounded-full p-2 flex rounded-full bg-gray-medium cursor-pointer w-14 justify-between"
+      className="relative transition duration-500 ease-in-out rounded-full p-2 flex rounded-full bg-gray-medium cursor-pointer w-14 justify-between ml-auto"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
     >
       <svg

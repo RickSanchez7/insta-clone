@@ -1,12 +1,14 @@
 import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FirebaseContext } from '../context/firebase';
+import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
 import { doesUsernameExist } from '../services/firebase';
 
 const SignUp = () => {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const { user } = useContext(UserContext);
 
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
@@ -83,6 +85,10 @@ const SignUp = () => {
   useEffect(() => {
     document.title = 'Sign Up - Insta';
   }, []);
+
+  if (user) {
+    history.push('/');
+  }
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center justify-center h-screen">

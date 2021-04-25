@@ -82,7 +82,7 @@ const Timeline = () => {
   }, [userPhotos]);
 
   return (
-    <div className="container flex flex-col md:col-span-2 col-span-3">
+    <div className="container flex flex-col md:col-span-2 col-span-3 md:ml-3 ml-0">
       <PostUpload />
       {!detailedPhotos.length ? (
         <Skeleton count={4} width={550} height={500} className="mb-5" />

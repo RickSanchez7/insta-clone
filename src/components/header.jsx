@@ -1,37 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { firebase } from '../lib/firebase';
 import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
-import { useAuth } from '../context/logged-in-user';
 
 const Header = () => {
-  const { user: loggedInUser } = useAuth();
   const { user } = useContext(UserContext);
 
-  const [avatar, setAvatar] = useState();
   const history = useHistory();
 
-  if (!loggedInUser) return null;
-
-  useEffect(() => {
-    const fetchAvatar = async () => {
-      if (user?.docId) {
-        firebase
-          .firestore()
-          .collection('users')
-          .doc(user?.docId)
-          .onSnapshot((snapshot) => {
-            setAvatar(snapshot.data().avatar);
-          });
-      }
-    };
-    if (user) {
-      fetchAvatar();
-    }
-
-    return () => fetchAvatar();
-  }, [user]);
+  if (!user) return null;
 
   return (
     <header className="h-16 bg-white dark:bg-black-light border-b border-gray-primary dark:border-gray-base transition-colors duration-200 mb-8">
@@ -49,7 +27,7 @@ const Header = () => {
             </h1>
           </div>
           <div className="text-gray-700 flex items-center align-items">
-            {loggedInUser ? (
+            {user ? (
               <>
                 <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
                   <svg
@@ -102,7 +80,7 @@ const Header = () => {
                     <Link to={`/p/${user?.userId}`}>
                       <img
                         className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex border border-red-primary"
-                        src={avatar && avatar}
+                        src={user?.avatar}
                         alt={`${user?.username} profile`}
                       />
                     </Link>

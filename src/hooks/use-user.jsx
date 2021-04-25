@@ -2,18 +2,22 @@ import { useState, useEffect } from 'react';
 import { getUserByUserId } from '../services/firebase';
 
 const useUser = (userId) => {
-  const [activeUser, setActiveUser] = useState();
+  const [activeUser, setActiveUser] = useState('');
 
   useEffect(() => {
     const getUserObjByUserId = async (id) => {
       const [user] = await getUserByUserId(id);
-      setActiveUser(user || {});
+      if (user) {
+        setActiveUser(user);
+      }
     };
 
     if (userId) {
       getUserObjByUserId(userId);
     }
-  }, [userId]);
+
+    return () => getUserByUserId();
+  }, []);
 
   return { user: activeUser, setActiveUser };
 };

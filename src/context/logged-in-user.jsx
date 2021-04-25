@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    return listener;
+    return () => listener();
   }, []);
 
   const value = {

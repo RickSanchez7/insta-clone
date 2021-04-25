@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { FirebaseContext } from '../context/firebase';
+import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
 
 const login = () => {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const { user } = useContext(UserContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,6 +32,10 @@ const login = () => {
   useEffect(() => {
     document.title = 'Login - Insta';
   }, []);
+
+  if (user) {
+    history.push('/');
+  }
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center justify-center h-screen">
