@@ -15,6 +15,7 @@ module.exports = {
         height: 'height',
       },
     },
+    darkMode: 'media',
     colors: {
       white: '#ffffff',
       blue: {
@@ -30,6 +31,7 @@ module.exports = {
         base: '#616161',
         background: '#fafafa',
         primary: '#dbdbdb',
+        medium: '#808080',
       },
       red: {
         primary: '#ed4956',
@@ -43,6 +45,7 @@ module.exports = {
   variants: {
     extend: {
       display: ['group-hover'],
+      fill: ['hover'],
     },
   },
 };

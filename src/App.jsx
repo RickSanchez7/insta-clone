@@ -14,7 +14,8 @@ const SignUp = lazy(() => import('./pages/signup'));
 const Dashboard = lazy(() => import('./pages/dashboard'));
 const Profile = lazy(() => import('./pages/profile'));
 const NotFound = lazy(() => import('./pages/not-found'));
-const EditPost = lazy(() => import('./pages/editPost'));
+const EditPost = lazy(() => import('./pages/edit-post'));
+const ProfilePost = lazy(() => import('./pages/edit-profile'));
 
 function App() {
   const { user: loggedInUser } = useAuth();
@@ -28,12 +29,15 @@ function App() {
           <Switch>
             <Route path={ROUTES.LOGIN} component={Login} />
             <Route path={ROUTES.SIGN_UP} component={SignUp} />
-            <Route path={ROUTES.PROFILE} component={Profile} />
+            <Route path={ROUTES.PROFILE} component={Profile} exact />
             <ProtectedRoute path={ROUTES.DASHBOARD} exact>
               <Dashboard />
             </ProtectedRoute>
             <ProtectedRoute path={ROUTES.EDIT_POST} exact>
               <EditPost />
+            </ProtectedRoute>
+            <ProtectedRoute path={ROUTES.EDIT_PROFILE} exact>
+              <ProfilePost />
             </ProtectedRoute>
             <Route component={NotFound} />
           </Switch>

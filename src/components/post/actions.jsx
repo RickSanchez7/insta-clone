@@ -71,7 +71,7 @@ const Actions = ({
                 handleFocus();
               }
             }}
-            className="md:w-8 w-6 md:h-8 h-6 text-black-light hover:text-red-primary transition-colors duration-200 select-none cursor-pointer focus:outline-none"
+            className="md:w-8 w-6 md:h-8 h-6 text-black-light hover:text-gray-base transition-colors duration-200 select-none cursor-pointer focus:outline-none"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

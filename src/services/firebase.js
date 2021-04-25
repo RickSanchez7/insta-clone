@@ -24,16 +24,18 @@ export const getUserByUsername = async (username) => {
 };
 
 export const getUserByUserId = async (userId) => {
-  const result = await firebase
-    .firestore()
-    .collection('users')
-    .where('userId', '==', userId)
-    .get();
+  if (userId) {
+    const result = await firebase
+      .firestore()
+      .collection('users')
+      .where('userId', '==', userId)
+      .get();
 
-  return result.docs.map((item) => ({
-    ...item.data(),
-    docId: item.id,
-  }));
+    return result.docs.map((item) => ({
+      ...item.data(),
+      docId: item.id,
+    }));
+  }
 };
 
 export const getSuggestedProfiles = async (userId, following) => {
@@ -207,4 +209,28 @@ export const updatePostMessage = async (message, docId) => {
   });
 
   return caption;
+};
+
+export const updateProfileImage = async (avatar, docId) => {
+  const image = firebase.firestore().collection('users').doc(docId).update({
+    avatar,
+  });
+
+  return image;
+};
+
+export const updateProfileUsername = async (username, docId) => {
+  const image = firebase.firestore().collection('users').doc(docId).update({
+    username,
+  });
+
+  return image;
+};
+
+export const updateProfileFullName = async (fullName, docId) => {
+  const image = firebase.firestore().collection('users').doc(docId).update({
+    fullName,
+  });
+
+  return image;
 };

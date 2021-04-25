@@ -1,17 +1,17 @@
 import { useParams, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getUserByUsername } from '../services/firebase';
+import { getUserByUserId } from '../services/firebase';
 import * as ROUTES from '../constants/routes';
 import UserProfile from '../components/profile';
 
 export default function Profile() {
-  const { username } = useParams();
+  const { id: userId } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const history = useHistory();
 
   useEffect(() => {
     async function checkUserExists() {
-      const [user] = await getUserByUsername(username);
+      const [user] = await getUserByUserId(userId);
       if (user?.userId) {
         setUserProfile(user);
       } else {
@@ -20,7 +20,11 @@ export default function Profile() {
     }
 
     checkUserExists();
-  }, [username, history]);
+  }, [userId, history]);
+
+  useEffect(() => {
+    document.title = 'Profile - Insta';
+  }, []);
 
   return userProfile?.username ? (
     <div className="bg-gray-background">

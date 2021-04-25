@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactLoader from '../components/loader';
 import { firebase } from '../lib/firebase';
+import { uploadImage } from '../services/cloudinay';
 import { updateImage, updatePostMessage } from '../services/firebase';
 
 function useHasUnmountedRef() {
@@ -54,14 +55,7 @@ const Editpost = () => {
     setError('');
     try {
       if (image) {
-        const data = new FormData();
-        data.append('file', image);
-        data.append('upload_preset', 'ricardo');
-        const res = await fetch(process.env.REACT_APP_CLOUDINARY_URL, {
-          method: 'POST',
-          body: data,
-        });
-        const file = await res.json();
+        const file = await uploadImage(image, 'ricardo');
         promises.push(updateImage(file.secure_url, postId));
       }
 
@@ -167,13 +161,7 @@ const Editpost = () => {
       <img src={imagePreview} alt={postDetails.userId} />
       <div className="border-t border-gray-primary">
         {error && <p className="text-red-primary md:px-4 px-2">{error}</p>}
-        <form
-          className="flex justify-between pl-0 md:pr-5 pr-3"
-          method="POST"
-          // onSubmit={(event) =>
-          //   message.length >= 1 ? handleChanges(event) : event.preventDefault()
-          // }
-        >
+        <form className="flex justify-between pl-0 md:pr-5 pr-3" method="POST">
           <input
             aria-label="Add a message"
             autoComplete="off"

@@ -2,12 +2,12 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 
-const User = ({ username, fullName, avatar }) => {
+const User = ({ username, fullName, avatar, userId }) => {
   return !username || !fullName ? (
     <Skeleton count={1} height={61} />
   ) : (
     <Link
-      to={`/p/${username}`}
+      to={`/p/${userId}`}
       className="md:flex hidden md:mb-6 mb-4 items-center justify-evenly"
     >
       <div className="flex items-center justify-evenly">

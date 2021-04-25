@@ -2,10 +2,16 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import { DEFAULT_IMAGE_PATH } from '../../constants/paths';
 import { FirebaseContext } from '../../context/firebase';
 import { UserContext } from '../../context/user';
+
+const variants = {
+  open: { opacity: 1, height: 'auto' },
+  closed: { opacity: 0, height: 0 },
+};
 
 const Header = ({ username, avatar, docId, postUserId }) => {
   const image = avatar !== undefined ? avatar : DEFAULT_IMAGE_PATH;
@@ -51,7 +57,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
   return (
     <div className="flex border-b border-gray-primary h-4 md:px-4 px-2 md:py-8 py-5 justify-between items-center">
       <div className="flex items-center">
-        <Link to={`/p/${username}`} className="flex items-center">
+        <Link to={`/p/${postUserId}`} className="flex items-center">
           <img
             className="rounded-full border border-red-primary md:h-11 h-8 md:w-11 w-8 flex mr-3"
             src={image}
@@ -82,25 +88,28 @@ const Header = ({ username, avatar, docId, postUserId }) => {
               />
             </svg>
           </button>
-          <div
+          <motion.div
+            animate={button !== 'hidden' ? 'open' : 'closed'}
+            variants={variants}
+            transition={{ duration: 0.2 }}
             className={`${button} absolute flex flex-col md:mt-20 mt-16 bg-white border border-gray-primary shadow-md z-10 right-4 rounded py-1`}
           >
-            <button
-              type="button"
-              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary"
-            >
-              <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
+            <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
+              <button
+                type="button"
+                className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary md:w-24 w-20"
+              >
                 edit
-              </Link>
-            </button>
+              </button>
+            </Link>
             <button
               type="button"
               onClick={deletePost}
-              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary"
+              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 hover:text-red-primary md:w-24 w-20"
             >
               <p className="md:text-base text-sm">delete</p>
             </button>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>

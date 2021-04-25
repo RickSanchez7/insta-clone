@@ -1,18 +1,37 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FirebaseContext } from '../context/firebase';
+import { firebase } from '../lib/firebase';
 import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
 import { useAuth } from '../context/logged-in-user';
 
 const Header = () => {
-  // const { user: loggedInUser } = useContext(UserContext);
   const { user: loggedInUser } = useAuth();
   const { user } = useContext(UserContext);
-  const { firebase } = useContext(FirebaseContext);
+
+  const [avatar, setAvatar] = useState();
   const history = useHistory();
 
   if (!loggedInUser) return null;
+
+  useEffect(() => {
+    const fetchAvatar = async () => {
+      if (user?.docId) {
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(user?.docId)
+          .onSnapshot((snapshot) => {
+            setAvatar(snapshot.data().avatar);
+          });
+      }
+    };
+    if (user) {
+      fetchAvatar();
+    }
+
+    return () => fetchAvatar();
+  }, [user]);
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
@@ -80,10 +99,10 @@ const Header = () => {
                 </button>
                 {user && (
                   <div className="flex items-center cursor-pointer  mr-1">
-                    <Link to={`/p/${user?.username}`}>
+                    <Link to={`/p/${user?.userId}`}>
                       <img
                         className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex border border-red-primary"
-                        src={user.avatar}
+                        src={avatar && avatar}
                         alt={`${user?.username} profile`}
                       />
                     </Link>
