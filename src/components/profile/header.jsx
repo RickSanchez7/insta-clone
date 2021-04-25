@@ -92,17 +92,17 @@ const Header = ({
                 <span className="font-bold md:mr-2">{photosCount}</span>
                 <p className="md:text-base text-xs">posts</p>
               </div>
-              <div className="flex flex-col md:flex-row justify-center items-center md:mr-10 mr-4 dark:text-white transition-colors duration-200">
-                <span className="font-bold md:mr-2 dark:text-white transition-colors duration-200">
-                  {followerCount}
-                </span>
-                <p className="md:text-base text-xs">
+              <div className="flex flex-col md:flex-row justify-center items-center md:mr-10 mr-4 dark:text-white transition-colors duration-150">
+                <span className="font-bold md:mr-2">{followerCount}</span>
+                <p className="md:text-base text-xs transition-colors duration-150">
                   {followerCount === 1 ? `follower` : `followers`}
                 </p>
               </div>
-              <div className="flex flex-col md:flex-row justify-center items-center md:mr-10 mr-4 dark:text-white">
-                <span className="font-bold md:mr-2">{following?.length}</span>
-                <p className="md:text-base text-xs dark:text-white">
+              <div className="flex flex-col md:flex-row justify-center items-center md:mr-10 mr-4 dark:text-white transition-colors duration-150">
+                <span className="font-bold md:mr-2 transition-colors duration-150">
+                  {following?.length}
+                </span>
+                <p className="md:text-base text-xs dark:text-white transition-colors duration-150">
                   following
                 </p>
               </div>

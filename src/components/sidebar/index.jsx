@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import User from './user';
 import Suggestions from './suggestions';
 import { UserContext } from '../../context/user';
@@ -25,4 +25,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

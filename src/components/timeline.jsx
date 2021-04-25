@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useEffect, useState, memo, useContext } from 'react';
+import { useEffect, useState, memo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { motion } from 'framer-motion';
 
@@ -8,11 +8,11 @@ import PostUpload from './post/post-upload';
 
 import { firebase } from '../lib/firebase';
 import { getUserByUserId } from '../services/firebase';
-import { UserContext } from '../context/user';
 import ReactLoader from './loader';
+import { useAuth } from '../context/logged-in-user';
 
 const Timeline = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useAuth();
 
   const [userPhotos, setUserPhotos] = useState([]);
   const [detailedPhotos, setDetailedPhotos] = useState([]);

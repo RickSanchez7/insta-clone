@@ -17,7 +17,7 @@ const useUser = (userId) => {
     }
 
     return () => getUserByUserId();
-  }, []);
+  }, [userId]);
 
   return { user: activeUser, setActiveUser };
 };

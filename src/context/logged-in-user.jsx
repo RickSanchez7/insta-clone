@@ -8,7 +8,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

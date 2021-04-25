@@ -9,6 +9,11 @@ const Header = () => {
 
   const history = useHistory();
 
+  const signout = () => {
+    firebase.auth().signOut();
+    history.push(ROUTES.LOGIN);
+  };
+
   if (!user) return null;
 
   return (
@@ -49,16 +54,7 @@ const Header = () => {
                 <button
                   type="button"
                   title="Sign Out"
-                  onClick={() => {
-                    firebase.auth().signOut();
-                    history.push(ROUTES.LOGIN);
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      firebase.auth().signOut();
-                      history.push(ROUTES.LOGIN);
-                    }
-                  }}
+                  onClick={() => signout()}
                 >
                   <svg
                     className="md:w-8 w-6 mr-6 text-black-light dark:text-white cursor-pointer hover:text-red-primary fill-current"
