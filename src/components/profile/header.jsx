@@ -63,7 +63,7 @@ const Header = ({
       </div>
       <div className="flex items-center justify-center flex-col">
         <div className="container flex items-center">
-          <p className="md:text-2xl dark:text-white text-xl mr-4">
+          <p className="md:text-2xl dark:text-white text-xl mr-4 transition-colors duration-200">
             {profileUsername}
           </p>
 
