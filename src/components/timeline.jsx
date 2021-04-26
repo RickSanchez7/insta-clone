@@ -99,7 +99,7 @@ const Timeline = () => {
           className="bg-blue-medium hover:bg-blue-light transition-colors duaration-200 text-white font-bold py-2 px-4 rounded-full mb-12 self-center md:w-20 w-16 md:h-10 h-8"
           onClick={fetchNextPhotos}
         >
-          {!loading ? (
+          {loading ? (
             <ReactLoader height={15} width={15} color="white" />
           ) : (
             'More'
