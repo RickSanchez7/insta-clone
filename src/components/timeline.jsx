@@ -64,7 +64,7 @@ const Timeline = () => {
       const photosWithUserDetails = await Promise.all(
         userPhotos.map(async (photo) => {
           let userLikedPhoto = false;
-          if (photo.likes.includes(user?.userId)) {
+          if (photo.likes.includes(user?.uid)) {
             userLikedPhoto = true;
           }
           // photo.userId = 2
