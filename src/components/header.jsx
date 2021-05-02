@@ -75,11 +75,11 @@ const Header = () => {
                 </button>
                 {activeUser && (
                   <div className="flex items-center cursor-pointer  mr-1">
-                    <Link to={`/p/${activeUser?.activeUserId}`}>
+                    <Link to={`/p/${activeUser.userId}`}>
                       <img
                         className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex border border-red-primary"
-                        src={activeUser?.avatar}
-                        alt={`${activeUser?.username} profile`}
+                        src={activeUser.avatar}
+                        alt={`${activeUser.username} profile`}
                       />
                     </Link>
                   </div>
