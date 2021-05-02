@@ -1,11 +1,13 @@
 import { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { firebase } from '../lib/firebase';
-import { UserContext } from '../context/user';
 import * as ROUTES from '../constants/routes';
+import { useAuth } from '../context/logged-in-user';
+import { UserContext } from '../context/user';
 
 const Header = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useAuth();
+  const { user: activeUser } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -14,7 +16,7 @@ const Header = () => {
     history.push(ROUTES.LOGIN);
   };
 
-  if (!user) return null;
+  if (!user || !activeUser) return null;
 
   return (
     <header className="h-16 bg-white dark:bg-black-light border-b border-gray-primary dark:border-gray-base transition-colors duration-200 mb-8">
@@ -32,7 +34,7 @@ const Header = () => {
             </h1>
           </div>
           <div className="text-gray-700 flex items-center align-items">
-            {user ? (
+            {activeUser ? (
               <>
                 <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
                   <svg
@@ -71,13 +73,13 @@ const Header = () => {
                     />
                   </svg>
                 </button>
-                {user && (
+                {activeUser && (
                   <div className="flex items-center cursor-pointer  mr-1">
-                    <Link to={`/p/${user?.userId}`}>
+                    <Link to={`/p/${activeUser?.activeUserId}`}>
                       <img
                         className="rounded-full mr-2 md:h-11 md:w-11 h-10 w-10 flex border border-red-primary"
-                        src={user?.avatar}
-                        alt={`${user?.username} profile`}
+                        src={activeUser?.avatar}
+                        alt={`${activeUser?.username} profile`}
                       />
                     </Link>
                   </div>

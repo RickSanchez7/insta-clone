@@ -1,13 +1,13 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ReactLoader from './components/loader';
 
 import * as ROUTES from './constants/routes';
 import { useAuth } from './context/logged-in-user';
 import ProtectedRoute from './helpers/protected-route';
-import useUser from './hooks/use-user';
 import { UserContext } from './context/user';
 import Header from './components/header';
+import { getUserByUserId } from './services/firebase';
 
 const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/signup'));
@@ -18,11 +18,26 @@ const EditPost = lazy(() => import('./pages/edit-post'));
 const ProfilePost = lazy(() => import('./pages/edit-profile'));
 
 function App() {
-  const { user: loggedInUser } = useAuth();
-  const { user, setActiveUser } = useUser(loggedInUser?.uid);
+  const [activeUser, setActiveUser] = useState('');
+
+  const { user } = useAuth();
+  useEffect(() => {
+    const getUserObjByUserId = async (id) => {
+      const profile = await getUserByUserId(id);
+      if (profile[0]) {
+        setActiveUser(profile[0]);
+      }
+    };
+
+    if (user) {
+      setTimeout(() => {
+        getUserObjByUserId(user.uid);
+      }, 500);
+    }
+  }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setActiveUser }}>
+    <UserContext.Provider value={{ user: activeUser, setActiveUser }}>
       <Router>
         <Header />
         <Suspense fallback={<ReactLoader />}>
@@ -31,7 +46,7 @@ function App() {
             <Route path={ROUTES.SIGN_UP} component={SignUp} />
             <Route path={ROUTES.PROFILE} component={Profile} exact />
             <ProtectedRoute path={ROUTES.DASHBOARD} exact>
-              <Dashboard />
+              <Dashboard user={user} activeUser={activeUser} />
             </ProtectedRoute>
             <ProtectedRoute path={ROUTES.EDIT_POST} exact>
               <EditPost />

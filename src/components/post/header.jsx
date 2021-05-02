@@ -19,9 +19,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
   const [button, setButton] = useState('hidden');
 
   const { firebase } = useContext(FirebaseContext);
-  const {
-    user: { userId, role },
-  } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const showButton = () => {
     if (button === 'hidden') return setButton('');
@@ -53,6 +51,10 @@ const Header = ({ username, avatar, docId, postUserId }) => {
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
+
+  if (!user) return null;
+
+  const { userId, role } = user;
 
   return (
     <div className="flex border-b border-gray-primary h-4 md:px-4 px-2 md:py-8 py-5 justify-between items-center">

@@ -9,11 +9,8 @@ import PostUpload from './post/post-upload';
 import { firebase } from '../lib/firebase';
 import { getUserByUserId } from '../services/firebase';
 import ReactLoader from './loader';
-import { useAuth } from '../context/logged-in-user';
 
-const Timeline = () => {
-  const { user } = useAuth();
-
+const Timeline = ({ user }) => {
   const [userPhotos, setUserPhotos] = useState([]);
   const [detailedPhotos, setDetailedPhotos] = useState([]);
   const [pages, setPages] = useState(0);

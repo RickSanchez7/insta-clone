@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext } from 'react';
 import { firebase } from '../lib/firebase';
+import { getUserByUserId } from '../services/firebase';
 
 const AuthContext = createContext();
 
@@ -8,20 +9,29 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState('');
+  const [loggedUser, setLoggedUser] = useState('');
+  const [activeUser, setActiveUser] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const listener = firebase.auth().onAuthStateChanged((authUser) => {
-      setUser(authUser);
+    const listener = firebase.auth().onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        setLoggedUser(authUser);
+        const user = await getUserByUserId(authUser.uid);
+        setActiveUser(user[0]);
+      } else {
+        setLoggedUser('');
+        setActiveUser('');
+      }
       setLoading(false);
     });
 
     return () => listener();
-  }, []);
+  }, [firebase]);
 
   const value = {
-    user,
+    user: loggedUser,
+    activeUser,
   };
 
   return (

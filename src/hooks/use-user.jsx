@@ -6,17 +6,19 @@ const useUser = (userId) => {
 
   useEffect(() => {
     const getUserObjByUserId = async (id) => {
-      const [user] = await getUserByUserId(id);
+      const user = await getUserByUserId(id);
       if (user) {
-        setActiveUser(user);
+        setActiveUser(user[0]);
       }
+
+      // return () => getUserByUserId();
     };
 
     if (userId) {
-      getUserObjByUserId(userId);
+      setTimeout(() => {
+        getUserObjByUserId(userId);
+      }, 500);
     }
-
-    return () => getUserByUserId();
   }, [userId]);
 
   return { user: activeUser, setActiveUser };

@@ -39,7 +39,7 @@ const SignUp = () => {
     const usernameExists = await doesUsernameExist(username);
 
     // verify if username is already in database
-    if (!usernameExists.length) {
+    if (!usernameExists) {
       try {
         const createdUserResult = await firebase
           .auth()

@@ -7,9 +7,7 @@ import AddComment from './add-comment';
 import { UserContext } from '../../context/user';
 
 const Comments = ({ docId, posted, commentInput, postUserId }) => {
-  const {
-    user: { username, role },
-  } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [commentsSlice, setCommentsSlice] = useState(2);
   const [comments, setComments] = useState([]);
@@ -65,6 +63,12 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
       setError('Something went wrong');
     }
   };
+
+  if (!user) {
+    return null;
+  }
+
+  const { username, role } = user;
 
   return (
     <>

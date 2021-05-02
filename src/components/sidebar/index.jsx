@@ -1,12 +1,9 @@
-import { memo, useContext } from 'react';
+import { memo } from 'react';
 import User from './user';
 import Suggestions from './suggestions';
-import { UserContext } from '../../context/user';
 
-const Sidebar = () => {
-  const {
-    user: { docId = '', fullName, username, userId, following, avatar } = {},
-  } = useContext(UserContext);
+const Sidebar = ({ activeUser }) => {
+  const { docId, fullName, username, userId, following, avatar } = activeUser;
 
   return (
     <div className="md:p-4 p-0">
