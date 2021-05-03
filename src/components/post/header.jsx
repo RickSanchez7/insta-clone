@@ -9,8 +9,8 @@ import { FirebaseContext } from '../../context/firebase';
 import { UserContext } from '../../context/user';
 
 const variants = {
-  open: { opacity: 1, height: 'auto' },
-  closed: { opacity: 0, height: 0 },
+  open: { height: 'auto', opacity: 1, with: 1 },
+  closed: { height: 0, opacity: 0, with: 0 },
 };
 
 const Header = ({ username, avatar, docId, postUserId }) => {
@@ -98,10 +98,13 @@ const Header = ({ username, avatar, docId, postUserId }) => {
             transition={{ duration: 0.15 }}
             className={`${button} absolute flex flex-col md:mt-20 mt-10 bg-white dark:bg-black-light border border-gray-primary dark:border-white shadow-md z-10 right-4 rounded py-1`}
           >
-            <Link to={`/edit-post/${docId}`} className="md:text-base text-sm">
+            <Link
+              to={`/edit-post/${docId}`}
+              className={`${button} md:text-base text-sm`}
+            >
               <button
                 type="button"
-                className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20"
+                className=" font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20"
               >
                 edit
               </button>
@@ -109,7 +112,7 @@ const Header = ({ username, avatar, docId, postUserId }) => {
             <button
               type="button"
               onClick={deletePost}
-              className="font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20"
+              className={`${button} font-bold italic transition-colors duration-200 linear py-1 md:px-5 px-3 dark:text-white hover:text-red-primary dark:hover:text-red-primary md:w-24 w-20`}
             >
               <p className="md:text-base text-sm">delete</p>
             </button>
