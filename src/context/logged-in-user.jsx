@@ -20,8 +20,8 @@ export const AuthProvider = ({ children }) => {
         const user = await getUserByUserId(authUser.uid);
         setActiveUser(user[0]);
       } else {
-        setLoggedUser('');
         setActiveUser('');
+        setLoggedUser('');
       }
       setLoading(false);
     });

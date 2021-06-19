@@ -18,7 +18,7 @@ const EditPost = lazy(() => import('./pages/edit-post'));
 const ProfilePost = lazy(() => import('./pages/edit-profile'));
 
 function App() {
-  const [activeUser, setActiveUser] = useState('');
+  const [activeUser, setActiveUser] = useState(null);
 
   const { user } = useAuth();
   useEffect(() => {

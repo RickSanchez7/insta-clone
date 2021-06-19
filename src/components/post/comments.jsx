@@ -76,7 +76,7 @@ const Comments = ({ docId, posted, commentInput, postUserId }) => {
         {comments?.slice(0, commentsSlice).map((item) => (
           <div key={item.id} className="mb-1 flex items-center">
             <div className="flex flex-col md:flex-row md:items-center justify-center md:text-base text-xs dark:text-white">
-              <Link to={`/p/${item.comments.displayName}`}>
+              <Link to={`/p/${item.comments.postUserId}`}>
                 <span className="mr-1 font-bold">
                   {item.comments.displayName}
                 </span>

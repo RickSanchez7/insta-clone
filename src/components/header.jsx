@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { firebase } from '../lib/firebase';
 import * as ROUTES from '../constants/routes';
 import { useAuth } from '../context/logged-in-user';
@@ -7,13 +7,11 @@ import { UserContext } from '../context/user';
 
 const Header = () => {
   const { user } = useAuth();
-  const { user: activeUser } = useContext(UserContext);
-
-  const history = useHistory();
+  const { user: activeUser, setActiveUser } = useContext(UserContext);
 
   const signout = () => {
+    setActiveUser(null);
     firebase.auth().signOut();
-    history.push(ROUTES.LOGIN);
   };
 
   if (!user || !activeUser) return null;

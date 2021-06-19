@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { motion } from 'framer-motion';
 
@@ -16,6 +16,14 @@ const Timeline = ({ user }) => {
   const [pages, setPages] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     const photo = firebase
       .firestore()
@@ -23,12 +31,14 @@ const Timeline = ({ user }) => {
       .orderBy('dateCreated', 'desc')
       .limit(10)
       .onSnapshot((snapshot) => {
-        setUserPhotos(
-          snapshot.docs.map((doc) => ({
-            docId: doc.id,
-            ...doc.data(),
-          }))
-        );
+        if (isMounted) {
+          setUserPhotos(
+            snapshot.docs.map((doc) => ({
+              docId: doc.id,
+              ...doc.data(),
+            }))
+          );
+        }
       });
 
     return () => photo();
@@ -46,7 +56,9 @@ const Timeline = ({ user }) => {
         snapshot.forEach((doc) => {
           items.push({ docId: doc.id, ...doc.data() });
         });
-        setUserPhotos([...userPhotos, ...items]);
+        if (isMounted) {
+          setUserPhotos([...userPhotos, ...items]);
+        }
       });
 
     if (pages !== userPhotos.length) {
